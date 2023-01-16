@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Default on sudo dump</title>
+    <link>http://previoip.github.io/tags/default/</link>
+    <description>Recent content in Default on sudo dump</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 17 Jul 2022 14:46:12 +0700</lastBuildDate><atom:link href="http://previoip.github.io/tags/default/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Image Test</title>
+      <link>http://previoip.github.io/posts/image-test/</link>
+      <pubDate>Sun, 17 Jul 2022 14:46:12 +0700</pubDate>
+      
+      <guid>http://previoip.github.io/posts/image-test/</guid>
+      <description>Heading Sub Heading content</description>
+    </item>
+    
+    <item>
+      <title>Frist</title>
+      <link>http://previoip.github.io/posts/frist/</link>
+      <pubDate>Sun, 17 Jul 2022 14:44:56 +0700</pubDate>
+      
+      <guid>http://previoip.github.io/posts/frist/</guid>
+      <description>Fuggggggg :DDDDDDDDDDD</description>
+    </item>
+    
+  </channel>
+</rss>
