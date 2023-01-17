@@ -1,24 +1,33 @@
 
-function remEl(parent, elClassName) {
+function rmElementByCLassName(parent, elClassName) {
   const els = parent.getElementsByClassName(elClassName)
   while (els.length > 0) {
     els[0].parentNode.removeChild(els[0])
   }
 }
 
-function copyCodeblockButton(targetNode) {
-  element = document.createElement('input')
-  element.type = 'button'
-  element.value = 'Copy'
-  element.classList = 'copy-button'
-  element.onclick = () => {
-    let elCopy = targetNode.cloneNode(true)
-    remEl(elCopy, 'ln');
-    // todo: turn this into async
-    navigator.clipboard.writeText(elCopy.innerText);
-    console.log("Copied to clipboard successfully!");
+function copyCodeblockButton(codeBlockElement) {
+  // Constructor functions, returns code block element
+  el = document.createElement('input')
+  el.type = 'button'
+  el.value = 'Copy'
+  el.classList = 'copy-button'
+  el.onclick = () => {
+
+    let elCopy = codeBlockElement.cloneNode(true) // deep copy of codeblock element nodes
+
+    rmElementByCLassName(elCopy, 'ln'); // Removes line number
+
+    navigator.clipboard.writeText(elCopy.innerText).then( 
+      ()=>{
+        console.log("Copied to clipboard successfully!");
+      },
+      ()=>{
+        console.warn("Failed to copy content.")
+      }
+    );
   }
-  return element
+  return el
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {

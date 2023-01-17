@@ -3,7 +3,7 @@
  
 
 :root {
-  --base-font-size: .8em;
+  --base-font-size: 1em;
   --base-font-type: monospace;
   --long-text-font-type: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   --content-width: 900px;
@@ -44,7 +44,7 @@
 
 @media screen and (max-width: 940px){
   :root {
-    --base-font-size: .6em;
+    --base-font-size: .8em;
     --content-width: calc(100vw - (4 * var(--content-padding)))
   }
 }
@@ -128,7 +128,7 @@ p {
   text-justify: auto;
 }
 
-p img {
+p img, div.mermaid svg {
   margin: auto;
   display: block;
   max-width: min(calc(100vw - 40px), 600px);
@@ -317,6 +317,7 @@ blockquote {
   color: var(--tx-c-primary-quarter);
   width: 100%;
   padding: .2em;
+  margin-top: 5rem;
 }
 
 ::-webkit-scrollbar
