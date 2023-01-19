@@ -12,6 +12,9 @@
 
 :root:not(.light):not(.dark) {
   --bg-c-primary : #232323;
+  --bg-c-code: #414447;
+  --bg-c-modal-alert: #7d7d28;
+  --bg-c-modal-failed: #992226;
   --tx-c-primary : #cacdcf;
   --tx-c-primary-half : #ebeced88;
   --tx-c-primary-quarter : #ebeced44;
@@ -21,26 +24,8 @@
   --tx-c-highlight : #efed60;
   --tx-c-hover : #9aaec2;
   --tx-c-active : #bad5f1;
-  --bg-c-code: #282c34;
   --tx-c-code: #abb2bf;
 }
-
-
-:root.light {
-  --bg-c-primary : #f7f7f7;
-  --tx-c-primary : #212121;
-  --tx-c-primary-half : #3e3e3e;
-  --tx-c-primary-quarter : #787674;
-  --tx-c-tp-primary-half : #f7f7f788;
-  --tx-c-tp-primary-quarter : #f7f7f744;
-  --tx-c-link : #3790ef;
-  --tx-c-highlight : #918f07;
-  --tx-c-hover : #5a7ab5;
-  --tx-c-active : #79a8d6;
-  --bg-c-code: #c4cddc;
-  --tx-c-code: #282c34;
-}
-
 
 @media screen and (max-width: 940px){
   :root {
@@ -148,7 +133,7 @@ ul.ul-reset li {
 
 code:not([class]) {
   background-color: var(--bg-c-code);
-  padding: 0 .3rem;
+  padding: .1em .4rem;
   border-radius: .2rem;
 }
 
@@ -178,8 +163,8 @@ div.highlight pre  {
   margin-bottom: 1rem;
 }
 
-input.copy-button {
-  border: none;
+input.input-button {
+  border-color: #00000000;
   padding: 0;
   margin-left: .5rem;
   font-family: inherit;
@@ -187,20 +172,32 @@ input.copy-button {
   padding: .1rem;
   text-align: center;
   text-decoration: none;
-  background-color: #00000000;
-  outline: 2px solid var(--bg-c-code);
   border-radius: .2rem;
-}
-
-input.copy-button:hover {
   background-color: var(--bg-c-code);
 }
 
-input.copy-button:active {
+
+input.input-button:hover {
+  background-color: var(--tx-c-hover);
+  cursor: pointer;
+}
+
+input.input-button:active {
   background-color: var(--tx-c-active);
   color: var(--bg-c-code);
 }
 
+.disabled, .failed {
+  pointer-events: none;
+}
+
+input.disabled {
+  background-color: var(--bg-c-modal-alert);
+}
+
+input.failed {
+  background-color: var(--bg-c-modal-failed);
+}
 
 /* navigation */
 #navbar {
