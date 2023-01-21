@@ -25,7 +25,8 @@ function copyCodeblockButton(codeBlockElement) {
 
     rmChildElementByCLassName(elCopy, 'ln'); // Removes line number
 
-    navigator.clipboard.writeText(elCopy.innerText).then( 
+    navigator.clipboard.writeText(elCopy.innerText)
+    .then( 
       ()=>{
         el.value = 'Copied!'
         el.disabled = true
@@ -49,7 +50,13 @@ function copyCodeblockButton(codeBlockElement) {
         }, 2000)
         console.warn("Failed to copy content.")
       }
+    )
+    .catch((e)=>{
+      console.warn(e)
+      }
     );
+  
+
   }
   return el
 }
