@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     child.style.setProperty('display', 'flex')
     child.style.setProperty('color', 'var(--tx-c-primary-half)')
-    child.style.setProperty('margin-bottom', '.5em')
+    child.style.setProperty('margin-bottom', '1em')
     child.style.setProperty('align-items', 'center')
     child.innerHTML = el.attributes.getNamedItem('data-lang').value
     child.appendChild(copyCodeblockButtonEl)

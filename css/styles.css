@@ -4,8 +4,9 @@
 
 :root {
   --base-font-size: 1em;
-  --base-font-type: monospace;
-  --long-text-font-type: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  --base-font-type: 'IBM Plex Mono', monospace;
+  --code-font-type: consolas, monospace;
+  --long-text-font-type: 'Open Sans', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, Arial, sans-serif;
   --content-width: 900px;
   --content-padding: 20px;
 }
@@ -131,6 +132,15 @@ ul.ul-reset li {
 
 /* codeblock */
 
+pre {
+  font-family: var(--base-font-type);
+}
+
+code {
+  font-family: var(--code-font-type);
+  font-weight: normal;
+}
+
 code:not([class]) {
   background-color: var(--bg-c-code);
   padding: .1em .4rem;
@@ -147,8 +157,18 @@ div.highlight pre  {
   overflow-x: auto  ;
 }
 
+div.highlight pre code span {
+  margin-block-end: .1em;
+}
+
 .MathJax, div.highlight pre {
   max-width: var(--content-width);
+}
+
+/* mermaid resets */
+
+div.mermaid .edgeLabel {
+  padding: .2rem;
 }
 
 /* wrapper */
