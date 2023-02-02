@@ -90,6 +90,10 @@ article > h5 {margin-top: calc(var(--base-font-size) * 2.4);}
 article > h6 {margin-top: calc(var(--base-font-size) * 3);}
 article > p {margin-top: calc(var(--base-font-size) * 2.25);}
 
+article > li {
+  font-size: inherit;
+}
+
 em {
   color: var(--tx-c-highlight);
 }
@@ -334,6 +338,23 @@ blockquote {
   display: inline;
 }
 
+table.table-default {
+  margin: 1em auto;
+  outline: 1px solid var(--tx-c-tp-primary-quarter);
+  border-collapse: collapse;
+}
+
+table.table-default th {
+  padding: .4em 1em;
+  /* background-color: var(--tx-c-tp-primary-quarter); */
+  outline: 1px solid var(--tx-c-tp-primary-quarter);
+  border-bottom: 3pt solid var(--tx-c-primary-quarter);
+}
+
+table.table-default td {
+  padding: .2em;
+  outline: 1px solid var(--tx-c-tp-primary-quarter);
+}
 
 #footer {
   color: var(--tx-c-primary-quarter);
