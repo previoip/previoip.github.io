@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vba on dumb by default</title>
+    <link>http://localhost:1313/tags/vba/</link>
+    <description>Recent content in Vba on dumb by default</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 19 Jan 2023 21:12:44 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/vba/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VBA: Categorizing Bunch of Rows with Bitwise Operators</title>
+      <link>http://localhost:1313/posts/visual-bat-shit-user-defined-eq-operand/</link>
+      <pubDate>Thu, 19 Jan 2023 21:12:44 +0700</pubDate>
+      <guid>http://localhost:1313/posts/visual-bat-shit-user-defined-eq-operand/</guid>
+      <description>&lt;h1 id=&#34;synopsis&#34; class=&#34;tc&#34;&gt;Synopsis&#xD;&#xA;&lt;/h1&gt;&lt;blockquote&gt;&#xA;&lt;p&gt;Keep in mind this might be a bad practice!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;I had this problem where I needed to keep track of &lt;em&gt;diffs&lt;/em&gt; from two different versions Excel workbooks. Each workbook have bunch if rows in the order of thousands, with 7-8 different parameters to keep an eye on.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

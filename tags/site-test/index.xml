@@ -1,1 +1,19 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>site-test on dumb by default</title><link>http://previoip.github.io/tags/site-test/</link><description>Recent content in site-test on dumb by default</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 17 Jul 2022 14:46:12 +0700</lastBuildDate><atom:link href="http://previoip.github.io/tags/site-test/index.xml" rel="self" type="application/rss+xml"/><item><title>Image Test</title><link>http://previoip.github.io/posts/image-test/</link><pubDate>Sun, 17 Jul 2022 14:46:12 +0700</pubDate><guid>http://previoip.github.io/posts/image-test/</guid><description>Heading Sub Heading content</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Site-Test on dumb by default</title>
+    <link>http://localhost:1313/tags/site-test/</link>
+    <description>Recent content in Site-Test on dumb by default</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 17 Jul 2022 14:46:12 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/site-test/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Image Test</title>
+      <link>http://localhost:1313/posts/image-test/</link>
+      <pubDate>Sun, 17 Jul 2022 14:46:12 +0700</pubDate>
+      <guid>http://localhost:1313/posts/image-test/</guid>
+      <description>&lt;h1 id=&#34;heading&#34; class=&#34;tc&#34;&gt;Heading&#xD;&#xA;&lt;/h1&gt;&#xD;&#xA;&lt;h3 id=&#34;sub-heading&#34; &gt;Sub Heading&#xD;&#xA;&#xD;&#xA;&lt;/h3&gt;&lt;p&gt;content&lt;/p&gt;&#xA;&lt;img src=&#34;./images/that-yoinky-sploinky.gif&#34; alt=&#34;image&#34;&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,1 +1,40 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on dumb by default</title><link>http://previoip.github.io/categories/</link><description>Recent content in Categories on dumb by default</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 26 Feb 2023 12:19:47 +0700</lastBuildDate><atom:link href="http://previoip.github.io/categories/index.xml" rel="self" type="application/rss+xml"/><item><title>python-hijinks</title><link>http://previoip.github.io/categories/python-hijinks/</link><pubDate>Sun, 26 Feb 2023 12:19:47 +0700</pubDate><guid>http://previoip.github.io/categories/python-hijinks/</guid><description/></item><item><title>you-tried</title><link>http://previoip.github.io/categories/you-tried/</link><pubDate>Sun, 26 Feb 2023 12:19:47 +0700</pubDate><guid>http://previoip.github.io/categories/you-tried/</guid><description/></item><item><title>dumber-day-by-day</title><link>http://previoip.github.io/categories/dumber-day-by-day/</link><pubDate>Sat, 18 Feb 2023 16:58:55 +0700</pubDate><guid>http://previoip.github.io/categories/dumber-day-by-day/</guid><description/></item><item><title>hugo-theme-update</title><link>http://previoip.github.io/categories/hugo-theme-update/</link><pubDate>Sun, 05 Feb 2023 15:10:22 +0700</pubDate><guid>http://previoip.github.io/categories/hugo-theme-update/</guid><description/></item><item><title>snippets</title><link>http://previoip.github.io/categories/snippets/</link><pubDate>Thu, 02 Feb 2023 19:45:37 +0700</pubDate><guid>http://previoip.github.io/categories/snippets/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on dumb by default</title>
+    <link>http://previoip.github.io/categories/</link>
+    <description>Recent content in Categories on dumb by default</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 26 Feb 2023 12:19:47 +0700</lastBuildDate>
+    <atom:link href="http://previoip.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python-Hijinks</title>
+      <link>http://previoip.github.io/categories/python-hijinks/</link>
+      <pubDate>Sun, 26 Feb 2023 12:19:47 +0700</pubDate>
+      <guid>http://previoip.github.io/categories/python-hijinks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>You-Tried</title>
+      <link>http://previoip.github.io/categories/you-tried/</link>
+      <pubDate>Sun, 26 Feb 2023 12:19:47 +0700</pubDate>
+      <guid>http://previoip.github.io/categories/you-tried/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dumber-Day-by-Day</title>
+      <link>http://previoip.github.io/categories/dumber-day-by-day/</link>
+      <pubDate>Sat, 18 Feb 2023 16:58:55 +0700</pubDate>
+      <guid>http://previoip.github.io/categories/dumber-day-by-day/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Snippets</title>
+      <link>http://previoip.github.io/categories/snippets/</link>
+      <pubDate>Thu, 02 Feb 2023 19:45:37 +0700</pubDate>
+      <guid>http://previoip.github.io/categories/snippets/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

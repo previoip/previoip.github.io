@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-8HTK24ZVY8"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-8HTK24ZVY8');
+        }
+      </script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/highlight.css?v=1.0.0">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+
+
+
+
+
+
+<style>:root{--f:1.2em;--w:30}html{margin:0 2em;padding:0 var(--f);max-width:calc(var(--f)*var(--w));font-size:var(--f)}body{margin:0;padding:0;font-family:monospace;scrollbar-face-color:ThreeDFace!important;scrollbar-shadow-color:ThreeDDarkShadow!important;scrollbar-highlight-color:ThreeDHighlight!important;scrollbar-3dlight-color:ThreeDLightShadow!important;scrollbar-darkshadow-color:ThreeDDarkShadow!important;scrollbar-track-color:Scrollbar!important;scrollbar-arrow-color:ButtonText!important}*{font-size:inherit}p{line-height:calc(var(--f)*1.2);padding-left:calc(var(--f)*1.6)}a{color:#4079d5;text-decoration:underline}a:hover{color:#1c6be9;text-decoration:none}a:active{color:#2555a1;text-decoration:none;background-color:var(--tx-c-hover)}div.mermaid .edgeLabel{padding:.2rem}img,div.mermaid svg{margin:auto;display:block;max-width:min(calc(100vw - var(--f) * 2),calc(var(--f)*var(--w)));min-width:200px}code:not([class]){background-color:#4d4f500f;padding:.1em .4rem;border-radius:.2rem}div.highlight pre{padding:1rem;border-radius:.6rem;overflow:scroll;overflow-y:auto;overflow-x:auto}div.highlight pre code span{margin-block-end:.1em}.disabled,.failed{pointer-events:none}.tc{padding-left:0;padding-right:0;text-align:center}.o50{opacity:.5}::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--tx-c-tp-primary-quarter);border-radius:3px}::-webkit-scrollbar-thumb{background:var(--tx-c-primary-half);border-radius:3px}</style>
+
+
+  <title>
+VBA: Categorizing Bunch of Rows with Bitwise Operators &ndash; dumb by default
+</title>
+</head>
+
+<body><div style="background-color: #d5d5d569;">
+  <br>
+  <h1 class="tc">dumb by default</h1>
+  
+<nav class="tc">
+[<a href="/">Home</a>]&nbsp;[<a href="/about/">About</a>]&nbsp;[<a href="/posts/">Posts</a>]&nbsp;[<a href="/resources/">Resources</a>]&nbsp;
+</nav><hr>
+</div><p style="padding: 0;">
+
+
+<span>dir: <i>
+
+
+
+
+
+
+
+
+<a href="/">Home</a> &sol;
+
+
+
+
+
+
+<a href="/posts/">Posts</a> &sol;
+
+
+
+
+
+
+<span>VBA: Categorizing Bunch of Rows with Bitwise …</span>
+
+</i></span>
+
+
+
+
+      <br>
+      
+      
+      
+      <span>published-date: 19 Jan 2023 21:12 &#43;0700</span><br>
+      
+      
+      
+       
+<span>
+  categories: [<a href="http://localhost:1313/categories/code-snippets/">code-snippets</a>]</span>
+<br>
+       
+<span>
+  tags: [<a href="http://localhost:1313/tags/vba/">vba</a>]</span>
+<br>    
+    </p>
+  <h1 class="tc">VBA: Categorizing Bunch of Rows with Bitwise Operators</h1>
+  
+  <hr>
+  
+
+
+<h1 id="synopsis" class="tc">Synopsis
+</h1><blockquote>
+<p>Keep in mind this might be a bad practice!</p>
+</blockquote>
+<p>I had this problem where I needed to keep track of <em>diffs</em> from two different versions Excel workbooks. Each workbook have bunch if rows in the order of thousands, with 7-8 different parameters to keep an eye on.</p>
+<p>To illustrate, imagine this two table of Employees.</p>
+
+
+
+
+
+<table class="table-default">
+  <thead>
+      <tr>
+          <th style="text-align: left">Name</th>
+          <th style="text-align: left">IDNumber</th>
+          <th style="text-align: left">Height</th>
+          <th style="text-align: left">Weight</th>
+          <th style="text-align: left">Cuh</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Foo</td>
+          <td style="text-align: left">00420</td>
+          <td style="text-align: left">120</td>
+          <td style="text-align: left">128</td>
+          <td style="text-align: left">No</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Bar</td>
+          <td style="text-align: left">00069</td>
+          <td style="text-align: left">180</td>
+          <td style="text-align: left">72</td>
+          <td style="text-align: left">No</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Baz</td>
+          <td style="text-align: left">01337</td>
+          <td style="text-align: left">72</td>
+          <td style="text-align: left">40</td>
+          <td style="text-align: left">Yes</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">&hellip;</td>
+          <td style="text-align: left">&hellip;</td>
+          <td style="text-align: left">&hellip;</td>
+          <td style="text-align: left">&hellip;</td>
+          <td style="text-align: left">&hellip;</td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+
+
+<table class="table-default">
+  <thead>
+      <tr>
+          <th style="text-align: left">Name</th>
+          <th style="text-align: left">IDNumber</th>
+          <th style="text-align: left">Height</th>
+          <th style="text-align: left">Weight</th>
+          <th style="text-align: left">Cuh</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Foo</td>
+          <td style="text-align: left">00420</td>
+          <td style="text-align: left">121</td>
+          <td style="text-align: left">127</td>
+          <td style="text-align: left">No</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Bar</td>
+          <td style="text-align: left">00069</td>
+          <td style="text-align: left">179</td>
+          <td style="text-align: left">72</td>
+          <td style="text-align: left">No</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Fuzz</td>
+          <td style="text-align: left">01336</td>
+          <td style="text-align: left">72</td>
+          <td style="text-align: left">45</td>
+          <td style="text-align: left">No</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">&hellip;</td>
+          <td style="text-align: left">&hellip;</td>
+          <td style="text-align: left">&hellip;</td>
+          <td style="text-align: left">&hellip;</td>
+          <td style="text-align: left">&hellip;</td>
+      </tr>
+  </tbody>
+</table>
+
+<p>Simple enough, right? The caveat comes when:</p>
+<ul>
+<li>You need to report on <em>which row and column the changes happened</em> and point out the row <em>why it happened</em>.</li>
+<li>Some changes is ignored or combined altogether for specific reason or among other thing. For example if both <code>height</code> and <code>weight</code> changes, then it would be alright.</li>
+<li>As an added bonus, this diff searching program also need to detect <em>dupes</em>!</li>
+</ul>
+<p>In this case you might think using <code>HLOOKUP</code>s with <code>IF</code>s or <code>SWITCH</code>es coupled with <code>COUNTIFS</code>s is more than enough (And you&rsquo;re right!). Or if you&rsquo;re a sadist, you might implement Myers into your program. But I&rsquo;ve found a way to collate this comparison categorization by transforming resulting comparison as bytes of an integer.</p>
+
+<h1 id="serialization-of-rows" class="tc">Serialization of Rows
+</h1><p>On thing to note, again, is the rows of both table needed to be iterated <em>twice</em> to find duplicates. Problem being accessing cell values from VBA can be very slow, at least that I&rsquo;m aware of. The better way is to compare both table is to turn each row in a form of an object instance then put this objects inside an <code>Array</code> or <code>Collection</code> where we can iterate each items.</p>
+
+<h1 id="del" class="tc">Del
+</h1><p>create <code>User-Defined Type</code> in VBA to store and access, in this case, <code>Employee</code> properties as sets of variables.</p>
+<p>Why? Initially everything is stored as a range of cells from sets of columns, which is annoying to debug since access to property is as per index basis just like searching values using <code>VLOOKUP</code>. My goal is to store these items as array of type/instances, where theoretically it&rsquo;d have much smaller size in ram using primitives like <code>Single</code> or <code>Integer</code> instead of default value <code>String</code> or <code>Variant</code> at runtime.</p>
+<p>The proper way would be using a class module and utilize set-get method from class instance to containerize these properties alongside some operand overloads. Which in the case I was doing, a little bit overkill.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vb.net" data-lang="vb.net"><span class="line"><span class="ln">1</span><span class="cl"><span class="n">Type</span> <span class="n">MyEmployee</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl">  <span class="n">empName</span> <span class="ow">As</span> <span class="kt">String</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">  <span class="n">empNumber</span> <span class="ow">As</span> <span class="kt">String</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">  <span class="n">empHeight</span> <span class="ow">As</span> <span class="kt">Integer</span> 
+</span></span><span class="line"><span class="ln">5</span><span class="cl">  <span class="n">empWeight</span> <span class="ow">As</span> <span class="kt">Long</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl">  <span class="p">...</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="k">End</span> <span class="n">Type</span>
+</span></span></code></pre></div><p>Defining a <code>type</code> is quite different than <code>struct</code> in other statically typed languages such as C or TypeScript.</p>
+
+
+
+  <p class="tc">Built with <a a target="_blank" class="extern" href="https://gohugo.io/">Hugo</a> | previoip &copy; 2024</p>
+</body>
+
+</html>
+
+
