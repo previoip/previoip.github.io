@@ -13,7 +13,7 @@
       <link>http://localhost:1313/posts/image-test/</link>
       <pubDate>Sun, 17 Jul 2022 14:46:12 +0700</pubDate>
       <guid>http://localhost:1313/posts/image-test/</guid>
-      <description>&lt;h1 id=&#34;heading&#34; class=&#34;tc&#34;&gt;Heading&#xD;&#xA;&lt;/h1&gt;&#xD;&#xA;&lt;h3 id=&#34;sub-heading&#34; &gt;Sub Heading&#xD;&#xA;&#xD;&#xA;&lt;/h3&gt;&lt;p&gt;content&lt;/p&gt;&#xA;&lt;img src=&#34;./images/that-yoinky-sploinky.gif&#34; alt=&#34;image&#34;&gt;</description>
+      <description>Heading Sub Heading content</description>
     </item>
   </channel>
 </rss>

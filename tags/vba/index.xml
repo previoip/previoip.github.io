@@ -13,7 +13,7 @@
       <link>http://localhost:1313/posts/visual-bat-shit-user-defined-eq-operand/</link>
       <pubDate>Thu, 19 Jan 2023 21:12:44 +0700</pubDate>
       <guid>http://localhost:1313/posts/visual-bat-shit-user-defined-eq-operand/</guid>
-      <description>&lt;h1 id=&#34;synopsis&#34; class=&#34;tc&#34;&gt;Synopsis&#xD;&#xA;&lt;/h1&gt;&lt;blockquote&gt;&#xA;&lt;p&gt;Keep in mind this might be a bad practice!&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;p&gt;I had this problem where I needed to keep track of &lt;em&gt;diffs&lt;/em&gt; from two different versions Excel workbooks. Each workbook have bunch if rows in the order of thousands, with 7-8 different parameters to keep an eye on.&lt;/p&gt;</description>
+      <description>Synopsis Keep in mind this might be a bad practice!&#xA;I had this problem where I needed to keep track of diffs from two different versions Excel workbooks.</description>
     </item>
   </channel>
 </rss>
