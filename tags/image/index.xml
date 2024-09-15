@@ -13,7 +13,7 @@
       <link>http://localhost:1313/posts/image-test/</link>
       <pubDate>Sun, 17 Jul 2022 14:46:12 +0700</pubDate>
       <guid>http://localhost:1313/posts/image-test/</guid>
-      <description>Heading Sub Heading content</description>
+      <description>Heading&#xD;Sub Heading&#xD;content</description>
     </item>
   </channel>
 </rss>

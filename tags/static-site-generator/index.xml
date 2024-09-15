@@ -13,7 +13,7 @@
       <link>http://localhost:1313/posts/theme-update-05-02-2023-theme-goes-public/</link>
       <pubDate>Sun, 05 Feb 2023 15:10:22 +0700</pubDate>
       <guid>http://localhost:1313/posts/theme-update-05-02-2023-theme-goes-public/</guid>
-      <description>Woah Now you can use slug theme I made solely for this blog. Link to github repo. Although the more I think about how I structured this theme, the less I&amp;rsquo;m willing to put this into hugo marketplace.</description>
+      <description>Woah&#xD;Now you can use slug theme I made solely for this blog. Link to github repo&#xD;. Although the more I think about how I structured this theme, the less I&amp;rsquo;m willing to put this into hugo marketplace.</description>
     </item>
     <item>
       <title>Theme Update 17 01 2023 - Mermaid Diagram</title>
@@ -27,7 +27,7 @@
       <link>http://localhost:1313/posts/theme-update-14-01-2023/</link>
       <pubDate>Sat, 14 Jan 2023 22:44:13 +0700</pubDate>
       <guid>http://localhost:1313/posts/theme-update-14-01-2023/</guid>
-      <description>edit 2023-01-15 13:18:21 Nevermind, none of these are used. I decided to go back to server-side rendering with Go-Chroma builtin syntax highlighting https://gohugo.</description>
+      <description>edit 2023-01-15 13:18:21&#xD;Nevermind, none of these are used. I decided to go back to server-side rendering with Go-Chroma builtin syntax highlighting https://gohugo.</description>
     </item>
   </channel>
 </rss>
