@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-8HTK24ZVY8"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-8HTK24ZVY8');
+        }
+      </script>
+    
+  
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/highlight.css?v=1.0.0">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+
+
+
+
+
+
+<style>:root{--f:1em;--w:30}html{margin:0 2em;max-width:calc(var(--f)*var(--w));font-size:var(--f)}body{margin:0;padding:0;font-family:monospace;scrollbar-face-color:ThreeDFace!important;scrollbar-shadow-color:ThreeDDarkShadow!important;scrollbar-highlight-color:ThreeDHighlight!important;scrollbar-3dlight-color:ThreeDLightShadow!important;scrollbar-darkshadow-color:ThreeDDarkShadow!important;scrollbar-track-color:Scrollbar!important;scrollbar-arrow-color:ButtonText!important}*{font-size:inherit}p{padding-left:calc(var(--f)*1.6)}a{color:#2d6ed7;text-decoration:underline}a:hover{color:#104db0;text-decoration:none}a:active{color:#2d6ed7;text-decoration:none;background-color:var(--tx-c-hover)}blockquote{opacity:.75;background-color:#e9e61c68}div.mermaid .edgeLabel{padding:.2rem}img,div.mermaid svg{margin:auto;display:block;max-width:min(100%,calc(var(--f)*var(--w)));min-width:100px;background-color:#282a36;border-radius:.6rem}code:not([class]){background-color:#8e98d575;padding:0 .2em;border-radius:.2em}div.highlight pre{padding:1rem;border-radius:.6rem;overflow:scroll;overflow-y:auto;overflow-x:auto}div.highlight pre code span{margin-block-end:.1em}.disabled,.failed{pointer-events:none}.tc{padding-left:0;padding-right:0;text-align:center}.o50{opacity:.5}::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:var(--tx-c-tp-primary-quarter);border-radius:3px}::-webkit-scrollbar-thumb{background:var(--tx-c-primary-half);border-radius:3px}</style>
+
+
+  <title>
+(Bit)Torrent as File Transfer &ndash; dumb by default
+</title>
+</head>
+
+<body><div style="background-color: #69696969;">
+  <br>
+  <h1 class="tc">dumb by default</h1>
+  
+<nav class="tc">
+[<a href="/">Home</a>]&nbsp;[<a href="/about/">About</a>]&nbsp;[<a href="/posts/">Posts</a>]&nbsp;[<a href="/resources/">Resources</a>]&nbsp;
+</nav><hr>
+</div><p style="padding: 0;">
+
+
+<span>dir: <i>
+
+
+
+
+
+
+
+
+<a href="/">Home</a> &sol;
+
+
+
+
+
+
+<a href="/posts/">Posts</a> &sol;
+
+
+
+
+
+
+<span>(Bit)Torrent as File Transfer</span>
+
+</i></span>
+
+
+
+
+      <br>
+      
+      
+      
+      <span>published-date: 27 Sep 2024 09:39 &#43;0700</span><br>
+      
+      
+      
+       
+<span>
+  categories: [<a href="http://localhost:1313/categories/misc/">misc</a>]</span>
+<br>
+       
+<span>
+  tags: [<a href="http://localhost:1313/tags/"></a>]</span>
+<br>    
+    </p>
+  <h1 class="tc">(Bit)Torrent as File Transfer</h1>
+  <hr>
+  <div>
+    
+
+<blockquote>
+<p>Before I begin I might need to address that: I do not endorse the act and practice of piracy. This post is not intended to be used as a tutorial or a guide, merely as a personal documentation on alternative use of BitTorrent and BitTorrent protocol as file transfer tool.</p>
+</blockquote>
+<p>Recently I had to move multiple fairly large files between a hosted server into my pc, which sums up to 300gb worth of compressed processed text gz files (yikes). One thing to consider I could not just create split archives since the storage is nearing full, so all files had to be transferred in one go.</p>
+<p>Normally <code>scp</code> can do the job just fine, but due to frequent disconnects on my end, straight scp is just asking for insanity. Especially in this shithole I live in, ISPs tend to throttle commonplace networks to an absolute fuckall.</p>
+<p>For all I know <code>scp</code> does not handle partial transfers. There are other options to do partial/interrupted file transfer such as <code>rsync</code> over ssh or <code>sftp reget</code>. Or even more sophisticated approach to invoke <code>dd</code> over ssh, seek and skip for each chunks of target file, then write each chunk blob into a allocated file on my local machine. Should there be a failed transfer, then keep record on last chunk that has been transferred and continue from there. Compare each file crc/hash so final file integrity can be assured.</p>
+<p>With that many options, using torrent (i.e. BitTorrent) is just an obtuse excuse, really. It might be wiser to not user torrent since the nature of the protocol is meant for p2p network file sync. I just need to get everything done once, and not planning to host onto others. There are also security concerns regarding torrent, we might get into that later. But then again it is an opportunity to learn how to use torrent especially configuring both serving and receiving ends.</p>
+<p>Here are my considerations for using torrent, or you might say, the feasibility of using such technology for this one-shot project is as follows.</p>
+<ul>
+<li>torrent clients automatically manages chunk (or block) transfers</li>
+<li>no need to tend or reup transfers if disconnect happens, since torrent client should be able to resume un-retrieved blocks from host</li>
+<li>client-side or server-side throttling, since I live in a shared house and we all share one internet connection, might be wise to limit download speed so my neighbors don&rsquo;t come knocking at my door</li>
+</ul>
+<p>Here are also antithesis of using torrent.</p>
+<ul>
+<li>anonymity, especially publicly tracked torrents. any device active peers participating will have their ip address listed from the torrent tracker<br>(in this post I&rsquo;m showing how to create private torrent, but still something you&rsquo;d need to know and why people often times say you&rsquo;d need VPN and not DNS-over-https services)</li>
+<li>afaik most IPSs are actively targeting torrent packets and try to throttle down any connections (can be slip-streamed with MSE/PE)</li>
+<li>p2p, the true purpose is not for regular file host, but as decentralized file sharing. The more the torrent has seeder host nodes, the better the torrent will be.</li>
+</ul>
+
+<h3 id="bittorrent-principles" >BitTorrent Principles
+
+</h3><p>BitTorrent, or often mentioned as torrent in the wild, is a peer-to-peer (p2p) communication protocol mainly used to share files across interconnected machines (I&rsquo;m just rephrasing from wiki lol). <code>.torrent</code> itself is a file that contains descriptors of hosted files and sometimes tracker announce server address. If not then you have to add manually.</p>
+<p>Tracker is an endpoint where you can query active peers (seeder and leecher) and health of a torrent. Often times it has url leading path to <code>/announce</code>. You might recall certain site that kick some ass and bay of pirates, those also serves as tracker for their hosted torrent. When you announce to tracker, you exposes your address and get peers addresses.</p>
+
+<h3 id="bittorrent-clients" >BitTorrent Clients
+
+</h3><p>There are various torrent client available in the market, FOSS options are qBittorrent, Transmission, and LibreTorrent.</p>
+<p>PSA Avoid uTorrent. Free version of uTorrent has become such an adware it&rsquo;s straight up cancer. Unless you&rsquo;re willing to spend for subscription then I&rsquo;m not stopping you. Fun side-note: uTorrent and the bittorrent protocol was developed under same company.</p>
+<p>I will be using headless <code>qbittorrent-nox</code> on my server, because there&rsquo;s something that needed to be addressed if you&rsquo;re using web-host gui to configure stuffs.</p>
+
+<h2 id="hosting-a-private-torrent" class="tc">Hosting a Private Torrent
+
+</h2>
+<h3 id="preps" >Preps
+
+</h3><p>Assuming you&rsquo;re on unix environment, say ubuntu, its always best practice to separate whatever you&rsquo;re hosting to an orphan userspace with limited authorization.</p>
+<p>Here I&rsquo;m using ubuntu. Here&rsquo;s a bit refresher how to create new user and disable login access.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1"># add new user with dir /home/&lt;username&gt;</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">sudo adduser &lt;username&gt;
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1"># disable login</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">sudo usermod -s /usr/sbin/nologin
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1"># if you ever needed to reactivate</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"># sudo usermod -s /bin/bash </span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"># to change from current userspace</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">sudo su - &lt;username&gt;
+</span></span></code></pre></div><p>And move target folders of file to newly created user.</p>
+
+<h3 id="client-configuration" >Client Configuration
+
+</h3><p>Install the preferred client which again in this case <code>qbittorrent-nox</code>. For ubuntu user there are two options to get the client, build from source or to get from <code>apt</code>. One catch though apt might not have the latest stable release, which I have covered on previous <a  href="../../posts/ubuntu-add-custom-package-vendors/">post</a> on how to setup ppa onto apt.</p>
+<p>Now you can run the program as background process by</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">qbittorrent-nox --daemon
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"># which will spawn a web server on port 8080 by default</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"># to use another port use</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">qbittorrent-nox --daemon --webui-port<span class="o">=</span>&lt;port&gt;
+</span></span></code></pre></div><p>where you can access from <code>&lt;your-server-address&gt;:&lt;web-gui-port&gt;</code> on your browser.</p>
+<p>Once that done, head to the web gui and head over <code>Tools &gt; Options &gt; Web UI &gt; Authentication</code> and change username and password accordingly. <strong>This is a must</strong> else unauthorized users can just access you gui with admin:admin tomfoolery.</p>
+<p>Now the reason using qbittorrent-nox is the embedded tracker feature, so we don&rsquo;t need to setup a separate tracker announce server. To enable head over <code>Tools &gt; Options &gt; Advanced &gt; qBittorrent Section</code> and enable the embedded tracker. Change port if needed but by default it should set to 9000. now we&rsquo;re exposing an tracker announcer to <code>&lt;address&gt;:9000/announce</code></p>
+<p>To check if port is open to listen, we can use net-tools <code>netstat</code> and check addresses and port which are bind to qbittorrent-nox configuration.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1"># if not yet installed</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"># apt get net-tools</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">netstat -nltp
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"># where</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1">#   -n numeric addresses</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1">#   -t tcp</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1">#   -l listening</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1">#   -p display PID and program names</span>
+</span></span></code></pre></div><p>You might want to keep note on the address and port, which we&rsquo;ll need on the next section.</p>
+
+<h3 id="creating-and-adding-torrent" >Creating and Adding <code>.torrent</code>
+
+</h3><p>There are various tools to generate torrent descriptors, even most client aforementioned are shipped with one. Unfortunately qbittorrent-nox doesn&rsquo;t so we&rsquo;d need to use aftermarket solution.</p>
+<p>One tool available on unix systems, and also mentioned on qbittorrent wiki, is <code>mktorrent</code> and is available on apt.</p>
+<p>Assuming you have the files ready inside a <code>&lt;path&gt;</code> directory, we can start generating the descriptors by following.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">mktorrent -p -a <span class="s2">&#34;&lt;address&gt;:&lt;tracker-port&gt;/announce&#34;</span> &lt;path&gt;
+</span></span><span class="line"><span class="ln">2</span><span class="cl">
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"># where</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1">#   -a to set announce address</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1">#   -p to set as private torrent, which disables DHT, LSD, and PeX trackers </span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1"># optional but not needed</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="c1">#   -n set name</span>
+</span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="c1">#   -o set output filename</span>
+</span></span><span class="line"><span class="ln">9</span><span class="cl"><span class="c1">#   -l set piece (or block) length, leave to set default of 256kb</span>
+</span></span></code></pre></div>
+<h3 id="start-hosting-the-file" >Start hosting the file
+
+</h3><p>Now to add our <code>.torrent</code> torrent descriptors to qtbittorrent-nox on the server can be done in two ways.</p>
+<p>First one is to download the generated <code>.torrent</code> to our local machine and add it manually from the web gui. This way you&rsquo;d still need to configure the filepath to be the <code>&lt;path&gt;</code> where the files resides on the server.</p>
+<p>The other way is to add the torrent by</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="ln">1</span><span class="cl">qbittorrent-nox &lt;dot-torrent-file&gt; --save-path<span class="o">=</span>&lt;path&gt;
+</span></span></code></pre></div><p>It&rsquo;s important to set save path since by default it&rsquo;ll set to <code>Downloads</code> folder.</p>
+<p>Once the torrent is added the status on the web gui should be seeding. If it does not resolve to seed then you&rsquo;ll need to change path again similar to the first method.</p>
+
+<h3 id="begin-the-transfer" >Begin the Transfer
+
+</h3><p>After all that, we can add the <code>.torrent</code> on whatever client you use in your local machine or other server. Now we watch as the torrent try to retrieve peers from our own tracker and allocate new space for the files.</p>
+
+
+
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <p class="tc">Built with <a a target="_blank" class="extern" href="https://gohugo.io/">Hugo</a> | previoip (c) 2024</p>
+</body>
+
+</html>
+
+

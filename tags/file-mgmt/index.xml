@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>File-Mgmt on dumb by default</title>
+    <link>http://localhost:1313/tags/file-mgmt/</link>
+    <description>Recent content in File-Mgmt on dumb by default</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 Sep 2024 09:39:36 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/file-mgmt/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>(Bit)Torrent as File Transfer Protocol</title>
+      <link>http://localhost:1313/posts/bittorrent-file-transfer/</link>
+      <pubDate>Fri, 27 Sep 2024 09:39:36 +0700</pubDate>
+      <guid>http://localhost:1313/posts/bittorrent-file-transfer/</guid>
+      <description>Before I begin I might need to address that: I do not endorse the act and practice of piracy. This post is not intended to be used as a tutorial or a guide, merely as a personal documentation on alternative use of BitTorrent and BitTorrent protocol as file transfer tool.</description>
+    </item>
+  </channel>
+</rss>
