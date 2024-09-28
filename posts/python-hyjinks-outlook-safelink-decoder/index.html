@@ -109,7 +109,8 @@ Python Hijinks: Outlook Safelink *Decoder* &ndash; dumb by default
     
 
 
-<h1 id="synopsis" class="tc">Synopsis
+<h1 id="synopsis" class="tc">
+<br>Synopsis
 </h1><p>There were times when me and my colleague were asked to regularly update and copy links out of Outlook 365 mail to be inserted into certain form. But the url we copied were always too long, and the form they gave us has a character limit. For some reason (read: <em>good</em>), these links always redirect to Microsoft Office Defender unsafe malicious link detection system.</p>
 <p>Here&rsquo;s a sample on how the link would look like if you copied directly from Outlook.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">https://your.company.windows.defender.domain.com/?url=https%3A//en.wikipedia.org/wiki/Sergeant_Reckless&amp;data=05%7C01%7Cmy.mail%40domain.com%7C46575da2930c2aa97e550b27b1090595%7Cd0dd9bc880d23c27c6e5821a10edc04e%7C1%7C0%7C844353527029278340%7CUnknown%7Cpegytgkototbwiuhiqkbodlblaacaxulmzsqdwdtgekwfuableebpvucgfhdobzygxpohqqcare%3D%7C3000%7C%7C%7C&amp;sdata=iXZKYIVxymHZqRIuefqinvbeXKHv%2BnRxdXMrYexvfRh%3D&amp;reserved=0
@@ -119,7 +120,8 @@ Python Hijinks: Outlook Safelink *Decoder* &ndash; dumb by default
 <p>It&rsquo;s pretty obvious our target link is embedded and formatted as <a  target="_blank" class="extern" href="https://en.wikipedia.org/wiki/Escape_character">escape characters</a> in the query <code>url</code> param. On top of that, the query goes through the defender system alongside additional payload, presumably the information of the receiver and the mail where it was copied. idk honestly.</p>
 <p>Knowing it&rsquo;s there, I did a quick googling and found a tool online to extract the og link (site: <a  target="_blank" class="extern" href="http://www.o365atp.com/">http://www.o365atp.com/</a>, which looks dodgy asf but I tested it and its safe 🤞). I decided to write myself a little python script just in case the web went offline (it&rsquo;s just a python implementation of the website).</p>
 
-<h1 id="the-script-tidbits" class="tc">The Script Tidbits
+<h1 id="the-script-tidbits" class="tc">
+<br>The Script Tidbits
 </h1><p>You can get the full version in my github repo: <a  target="_blank" class="extern" href="https://github.com/previoip/outlook_365_safelink_decoder">Outlook Safelink Decoder</a> utilizing <code>urllib.parse</code> in python. Although the title itself is a bit misleading because it doesn&rsquo;t do any decoding at all.</p>
 <p>This is a snippet of the only functional part of the script.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">safelinkDecode</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>

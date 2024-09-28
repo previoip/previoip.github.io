@@ -109,7 +109,8 @@ VBA: Categorizing Bunch of Rows with Bitwise Operators &ndash; dumb by default
     
 
 
-<h1 id="synopsis" class="tc">Synopsis
+<h1 id="synopsis" class="tc">
+<br>Synopsis
 </h1><blockquote>
 <p>Keep in mind this might be a bad practice!</p>
 </blockquote>
@@ -217,10 +218,12 @@ VBA: Categorizing Bunch of Rows with Bitwise Operators &ndash; dumb by default
 </ul>
 <p>In this case you might think using <code>HLOOKUP</code>s with <code>IF</code>s or <code>SWITCH</code>es coupled with <code>COUNTIFS</code>s is more than enough (And you&rsquo;re right!). Or if you&rsquo;re a sadist, you might implement Myers into your program. But I&rsquo;ve found a way to collate this comparison categorization by transforming resulting comparison as bytes of an integer.</p>
 
-<h1 id="serialization-of-rows" class="tc">Serialization of Rows
+<h1 id="serialization-of-rows" class="tc">
+<br>Serialization of Rows
 </h1><p>On thing to note, again, is the rows of both table needed to be iterated <em>twice</em> to find duplicates. Problem being accessing cell values from VBA can be very slow, at least that I&rsquo;m aware of. The better way is to compare both table is to turn each row in a form of an object instance then put this objects inside an <code>Array</code> or <code>Collection</code> where we can iterate each items.</p>
 
-<h1 id="del" class="tc">Del
+<h1 id="del" class="tc">
+<br>Del
 </h1><p>create <code>User-Defined Type</code> in VBA to store and access, in this case, <code>Employee</code> properties as sets of variables.</p>
 <p>Why? Initially everything is stored as a range of cells from sets of columns, which is annoying to debug since access to property is as per index basis just like searching values using <code>VLOOKUP</code>. My goal is to store these items as array of type/instances, where theoretically it&rsquo;d have much smaller size in ram using primitives like <code>Single</code> or <code>Integer</code> instead of default value <code>String</code> or <code>Variant</code> at runtime.</p>
 <p>The proper way would be using a class module and utilize set-get method from class instance to containerize these properties alongside some operand overloads. Which in the case I was doing, a little bit overkill.</p>
