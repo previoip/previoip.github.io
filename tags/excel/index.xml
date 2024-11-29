@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Excel on dumb by default</title>
+    <link>http://localhost:1313/tags/excel/</link>
+    <description>Recent content in Excel on dumb by default</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 28 Nov 2024 09:14:37 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/excel/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Ultimate Excel Cheatsheet</title>
+      <link>http://localhost:1313/posts/the-ultimate-excel-cheatsheet/</link>
+      <pubDate>Thu, 28 Nov 2024 09:14:37 +0700</pubDate>
+      <guid>http://localhost:1313/posts/the-ultimate-excel-cheatsheet/</guid>
+      <description>Another day another generic HR engagement-bait post of someones supposedly excel shortcuts cheatsheet; on paper, flourish typeface, listing some of the most basic, downright obvious, Microsoft Excel shortcuts.</description>
+    </item>
+  </channel>
+</rss>
