@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-8HTK24ZVY8"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-8HTK24ZVY8');
+        }
+      </script>
+    
+  
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/highlight.css?v=1.0.0">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+
+
+
+
+
+
+<style>:root{--f:1em;--w:30}html{margin:0 2em;max-width:calc(var(--f)*var(--w));font-size:var(--f)}body{margin:0;padding:0;font-family:monospace;scrollbar-face-color:ThreeDFace!important;scrollbar-shadow-color:ThreeDDarkShadow!important;scrollbar-highlight-color:ThreeDHighlight!important;scrollbar-3dlight-color:ThreeDLightShadow!important;scrollbar-darkshadow-color:ThreeDDarkShadow!important;scrollbar-track-color:Scrollbar!important;scrollbar-arrow-color:ButtonText!important}small{font-size:calc(var(--f)*.82)}*{font-size:inherit}p{padding-left:calc(var(--f)*1.6)}a{color:#1c69e5;text-decoration:underline}a:hover{color:#2072f5;text-decoration:none}a:active{color:#0062ff;text-decoration:none;background-color:var(--tx-c-hover)}blockquote{opacity:.75;background-color:#e9e61c68}div.mermaid .edgeLabel{padding:.2rem}img,div.mermaid svg{margin:auto;display:block;max-width:min(100%,calc(var(--f)*var(--w)));min-width:100px;background-color:#282a36;border-radius:.6rem}code:not([class]){background-color:#8e98d575;padding:0 .2em;border-radius:.2em}div.highlight pre{padding:1rem;border-radius:.6rem;overflow:scroll;overflow-y:auto;overflow-x:auto}div.highlight pre code span{margin-block-end:.1em}.disabled,.failed{pointer-events:none}.tc{padding-left:0;padding-right:0;text-align:center}.o50{opacity:.5}::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#43454ce6;border-radius:3px}::-webkit-scrollbar-thumb{background:#c1cdf6e6;border-radius:3px}</style>
+
+
+  <title>
+Python Hijinks - Permuting Params &ndash; dumb by default
+</title>
+</head>
+
+<body><div style="background-color: #69696969;">
+  <br>
+  <h1 class="tc">dumb by default</h1>
+  
+<nav class="tc">
+[<a href="/">Home</a>]&nbsp;[<a href="/about/">About</a>]&nbsp;[<a href="/posts/">Posts</a>]&nbsp;[<a href="/resources/">Resources</a>]&nbsp;
+</nav><hr>
+</div><p style="padding: 0;">
+
+
+
+
+      
+       
+<span>
+  categories: [<a href="http://localhost:1313/categories/quickie/">quickie</a>] [<a href="http://localhost:1313/categories/python-hijinks/">python-hijinks</a>]</span>
+<br>
+       
+<span>
+  tags: [<a href="http://localhost:1313/tags/python/">python</a>]</span>
+<br>    
+    </p>
+  <h1 class="tc">Python Hijinks - Permuting Params</h1>
+  <hr>
+  <div>
+    
+
+<p>Before we begin I must say this might not be best practices and not within standard of writing in python nor extendable to another language. But to some extent with python&rsquo;s &ldquo;everything is object&rdquo; mentality, it&rsquo;s doable.</p>
+<p>When training or testing a model, or trying out different parameters on a program you made, you might need to input sets of different parameters in order to map different behavior on a given value(s). One thing though, passing arguments and/or using config file, iterating different config and running with a script, sometimes is not feasible when working on notebooks (sometimes). Not mentioning the syntax to get these values, whether using a <code>json</code> or <code>configparser</code>, nuh-uh. Even wrapping these as <code>dataclass</code> is just an added tech-debt when you need to add another parameter.</p>
+<p>I prefer storing these params in a nested classes as a way to differentiate sections like as follows.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="k">class</span> <span class="nc">config</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">  <span class="k">class</span> <span class="nc">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="n">path</span>          <span class="o">=</span> <span class="s1">&#39;./foo&#39;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="n">chunk_size</span>    <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">16</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="n">seed</span>          <span class="o">=</span> <span class="mi">1337</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">  <span class="k">class</span> <span class="nc">rl</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="n">batch_size</span>    <span class="o">=</span> <span class="mi">256</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="n">gamma</span>         <span class="o">=</span> <span class="mf">0.99</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="n">eps_start</span>     <span class="o">=</span> <span class="mf">0.9</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="n">eps_end</span>       <span class="o">=</span> <span class="mf">0.05</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="n">eps_decay</span>     <span class="o">=</span> <span class="kc">None</span> <span class="c1"># None value will fallback to `request_size_per_step * 2</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="n">num_episode</span>   <span class="o">=</span> <span class="mi">1000</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="n">tau</span>           <span class="o">=</span> <span class="mf">0.005</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="n">lr</span>            <span class="o">=</span> <span class="mf">1e-4</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="c1"># and so on and so forth</span>
+</span></span></code></pre></div><p>The reason? With this approach I can make quick changes, no weird prefixes to differentiate same variable names across contexts, adding inline comments, and with autocompletion a blazing fast referencing variables experience just like a dataclass would. Problem arises when I need to input different pairs to compare against.</p>
+<p>Thus I implemented a way to iterate over cartesian product of values straight from the config namespace, with little to no effort on changing the stuff I already wrote.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">import</span> <span class="nn">typing</span> <span class="k">as</span> <span class="nn">t</span> <span class="c1"># entirely optional, and I might be wrong on these type hinting business but I already wrote it so why not </span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="kn">import</span> <span class="nn">itertools</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="k">class</span> <span class="nc">PermutableConfig</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">  <span class="n">_sect_prfx</span> <span class="o">=</span> <span class="s1">&#39;section_&#39;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">  <span class="n">_attr_prfx</span> <span class="o">=</span> <span class="s1">&#39;_permute_&#39;</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">  <span class="nd">@classmethod</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">  <span class="k">def</span> <span class="nf">_sections</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Generator</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="k">yield from</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_sect_prfx</span><span class="p">),</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">cls</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl">  <span class="nd">@classmethod</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">  <span class="k">def</span> <span class="nf">_copy</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;PermutableConfig&#39;</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="n">cp</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39;Copy&#39;</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_sections</span><span class="p">():</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">      <span class="n">section_cls</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">      <span class="nb">setattr</span><span class="p">(</span><span class="n">cp</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">section_cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="s1">&#39;Copy&#39;</span><span class="p">,</span> <span class="n">section_cls</span><span class="o">.</span><span class="vm">__bases__</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">section_cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)))</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="k">return</span> <span class="n">cp</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">
+</span></span><span class="line"><span class="ln">20</span><span class="cl">  <span class="nd">@classmethod</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">  <span class="k">def</span> <span class="nf">_entries</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_sections</span><span class="p">():</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">      <span class="n">section_cls</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">      <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_attr_prfx</span><span class="p">),</span> <span class="nb">dir</span><span class="p">(</span><span class="n">section_cls</span><span class="p">)):</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">        <span class="n">values</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">section_cls</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span> <span class="k">continue</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">        <span class="n">attr_trunc</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_attr_prfx</span><span class="p">):]</span>
+</span></span><span class="line"><span class="ln">28</span><span class="cl">        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">section_cls</span><span class="p">,</span> <span class="n">attr_trunc</span><span class="p">),</span> <span class="o">*</span><span class="n">values</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">29</span><span class="cl">        <span class="k">yield</span> <span class="n">section</span><span class="p">,</span> <span class="n">attr_trunc</span><span class="p">,</span> <span class="n">values</span>
+</span></span><span class="line"><span class="ln">30</span><span class="cl">
+</span></span><span class="line"><span class="ln">31</span><span class="cl">  <span class="nd">@classmethod</span>
+</span></span><span class="line"><span class="ln">32</span><span class="cl">  <span class="k">def</span> <span class="nf">permute_count</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">33</span><span class="cl">    <span class="n">r</span> <span class="o">=</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="ln">34</span><span class="cl">    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_entries</span><span class="p">():</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">      <span class="n">r</span> <span class="o">*=</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">36</span><span class="cl">    <span class="k">return</span> <span class="n">r</span>
+</span></span><span class="line"><span class="ln">37</span><span class="cl">
+</span></span><span class="line"><span class="ln">38</span><span class="cl">  <span class="nd">@classmethod</span>
+</span></span><span class="line"><span class="ln">39</span><span class="cl">  <span class="k">def</span> <span class="nf">permute</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">Generator</span><span class="p">[</span><span class="s1">&#39;PermutableConfig&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+</span></span><span class="line"><span class="ln">40</span><span class="cl">    <span class="n">sections</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="nb">tuple</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_entries</span><span class="p">()))</span>
+</span></span><span class="line"><span class="ln">41</span><span class="cl">    <span class="k">for</span> <span class="n">vals</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">42</span><span class="cl">      <span class="n">copy</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_copy</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">43</span><span class="cl">      <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vals</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">44</span><span class="cl">        <span class="n">copy_section</span> <span class="o">=</span> <span class="n">sections</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">45</span><span class="cl">        <span class="n">copy_section_cls</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">copy_section</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">46</span><span class="cl">        <span class="nb">setattr</span><span class="p">(</span><span class="n">copy_section_cls</span><span class="p">,</span> <span class="n">attrs</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">47</span><span class="cl">      <span class="k">yield</span> <span class="n">copy</span>
+</span></span><span class="line"><span class="ln">48</span><span class="cl">
+</span></span><span class="line"><span class="ln">49</span><span class="cl">  <span class="nd">@classmethod</span>
+</span></span><span class="line"><span class="ln">50</span><span class="cl">  <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln">51</span><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">52</span><span class="cl">    <span class="n">reserved</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">53</span><span class="cl">    <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_sections</span><span class="p">():</span>
+</span></span><span class="line"><span class="ln">54</span><span class="cl">      <span class="n">section_cls</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">section</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">55</span><span class="cl">      <span class="k">if</span> <span class="ow">not</span> <span class="n">section</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">56</span><span class="cl">        <span class="n">res</span><span class="p">[</span><span class="n">section</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">57</span><span class="cl">      <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">reserved</span><span class="p">,</span> <span class="nb">dir</span><span class="p">(</span><span class="n">section_cls</span><span class="p">)):</span>
+</span></span><span class="line"><span class="ln">58</span><span class="cl">        <span class="n">res</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">section_cls</span><span class="p">,</span> <span class="n">attr</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">59</span><span class="cl">    <span class="k">return</span> <span class="n">res</span>
+</span></span></code></pre></div><p>Now the new config namespace only need to inherit the class above.</p>
+<p>For instance I want to observe over different learning rate, episode, batch size, and chunk size. Now config should looks like this.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="k">class</span> <span class="nc">config</span><span class="p">(</span><span class="n">PermutableConfig</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">  <span class="k">class</span> <span class="nc">section_default</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="n">path</span>          <span class="o">=</span> <span class="s1">&#39;./foo&#39;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="n">chunk_size</span>    <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">16</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="n">_permute_chunk_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="o">**</span><span class="mi">17</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="n">seed</span>          <span class="o">=</span> <span class="mi">1337</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">  <span class="k">class</span> <span class="nc">section_rl</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="n">batch_size</span>    <span class="o">=</span> <span class="mi">256</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="n">_permute_batch_size</span> <span class="o">=</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">128</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="n">gamma</span>         <span class="o">=</span> <span class="mf">0.99</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="n">eps_start</span>     <span class="o">=</span> <span class="mf">0.9</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="n">eps_end</span>       <span class="o">=</span> <span class="mf">0.05</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="n">eps_decay</span>     <span class="o">=</span> <span class="kc">None</span> <span class="c1"># None value will fallback to `request_size_per_step * 2</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="n">num_episode</span>   <span class="o">=</span> <span class="mi">1000</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="n">_permute_num_episode</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">10_000</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="n">tau</span>           <span class="o">=</span> <span class="mf">0.005</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="n">lr</span>            <span class="o">=</span> <span class="mf">1e-4</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="n">_permute_lr</span>   <span class="o">=</span> <span class="p">[</span><span class="mf">1e-5</span><span class="p">,</span> <span class="mf">1.5e-5</span><span class="p">]</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="c1"># on and on</span>
+</span></span></code></pre></div><p>Notice the class and the variable names prefixes. The <code>section</code> prefix is used to filter out other namespace that will be copied over the generator (note that anything that doesn&rsquo;t have the prefix will not be carried over), and <code>_permute</code> prefix indicate that the variable after that prefix should be iterated over. Overall I only need to direct initial sections with the prefix added.</p>
+<p>Right then, how shall this be used?</p>
+<p>Tbh I don&rsquo;t like to use global variable (the <code>config</code> class itself already is), avoiding cluttered var names all over and accidentally assign values on them. I always pass these namespaces as args on any function or object method that needs them. Which in a way I can do as follows.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="ln"> 1</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="k">def</span> <span class="nf">some_function_that_receives_config_namespace_as_args</span><span class="p">(</span><span class="n">cfg</span><span class="p">:</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">  <span class="c1"># do stuff</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">  <span class="o">...</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="k">class</span> <span class="nc">OrObjectThatNeedConfigOnInit</span><span class="p">:</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">:</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="c1"># you get the idea</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">
+</span></span><span class="line"><span class="ln">11</span><span class="cl">
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"># if I ever need to run initial configuration, then</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="n">some_function_that_receives_config_namespace_as_args</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="n">thing</span> <span class="o">=</span> <span class="n">OrObjectThatNeedConfigOnInit</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl">
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="c1"># or if I need to iterate over other values</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="k">for</span> <span class="n">new_config</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">permute</span><span class="p">():</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">  <span class="n">some_function_that_receives_config_namespace_as_args</span><span class="p">(</span><span class="n">new_config</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">  <span class="n">thing</span> <span class="o">=</span> <span class="n">OrObjectThatNeedConfigOnInit</span><span class="p">(</span><span class="n">new_config</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+
+  </div>
+  
+
+  
+  <br>
+  <br>
+  <br>
+  <br>
+  <p class="tc">Built with <a a target="_blank" class="extern" href="https://gohugo.io/">Hugo</a> | previoip (c) 2025</p>
+</body>
+
+</html>
+
+
