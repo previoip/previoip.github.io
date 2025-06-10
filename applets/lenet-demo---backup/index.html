@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  
+    
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-8HTK24ZVY8"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-8HTK24ZVY8');
+        }
+      </script>
+    
+  
+
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/highlight.css?v=1.0.0">
+<link rel="icon" href="/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+
+
+
+
+
+
+
+<style>:root{--f:1em;--w:30}html{margin:0 2em;max-width:calc(var(--f)*var(--w));font-size:var(--f)}body{margin:0;padding:0;font-family:monospace;scrollbar-face-color:ThreeDFace!important;scrollbar-shadow-color:ThreeDDarkShadow!important;scrollbar-highlight-color:ThreeDHighlight!important;scrollbar-3dlight-color:ThreeDLightShadow!important;scrollbar-darkshadow-color:ThreeDDarkShadow!important;scrollbar-track-color:Scrollbar!important;scrollbar-arrow-color:ButtonText!important}small{font-size:calc(var(--f)*.82)}*{font-size:inherit}p{padding-left:calc(var(--f)*1.6)}p canvas{outline:1px solid #000;width:calc(100% - var(--f)*1.6)}a{color:#1c69e5;text-decoration:underline}a:hover{color:#2072f5;text-decoration:none}a:active{color:#0062ff;text-decoration:none;background-color:var(--tx-c-hover)}blockquote{opacity:.75;background-color:#e9e61c68}div.mermaid .edgeLabel{padding:.2rem}img,div.mermaid svg{margin:auto;display:block;max-width:min(100%,calc(var(--f)*var(--w)));min-width:100px;background-color:#282a36;border-radius:.6rem}code:not([class]){background-color:#8e98d575;padding:0 .2em;border-radius:.2em}div.highlight pre{padding:1rem;border-radius:.6rem;overflow:scroll;overflow-y:auto;overflow-x:auto}div.highlight pre code span{margin-block-end:.1em}.disabled,.failed{pointer-events:none}.tc{padding-left:0;padding-right:0;text-align:center}.o50{opacity:.5}::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:#43454ce6;border-radius:3px}::-webkit-scrollbar-thumb{background:#c1cdf6e6;border-radius:3px}input,select{font:inherit}#control div{display:flex;align-items:center;margin-top:.6em}#control input,#control select{display:inline-block;margin:0 .5em}#control p{margin:0;width:2rem}</style>
+
+
+  <title>
+//backup LeNet5 Demo &ndash; dumb by default
+</title>
+</head>
+
+<body><div style="background-color: #69696969;">
+  <br>
+  <h1 class="tc">dumb by default</h1>
+  
+<nav class="tc">
+[<a href="/">Home</a>]&nbsp;[<a href="/about/">About</a>]&nbsp;[<a href="/posts/">Posts</a>]&nbsp;[<a href="/resources/">Resources</a>]&nbsp;[<a href="/applets/">Applets</a>]&nbsp;
+</nav><hr>
+</div><p style="padding: 0;">
+
+
+<span>dir: <i>
+
+
+
+
+
+
+
+
+<a href="/">Home</a> &sol;
+
+
+
+
+
+
+<a href="/applets/">Applets</a> &sol;
+
+
+
+
+
+
+<span>//backup LeNet5 Demo</span>
+
+</i></span>
+
+
+
+
+      <br>
+      
+      
+      
+      <span>published-date: 31 May 2025 14:25 &#43;0700</span><br>
+      
+      
+      
+       
+<span>
+  categories: [<a href="http://localhost:1313/categories/misc/">misc</a>]</span>
+<br>
+       
+<span>
+  tags: [<a href="http://localhost:1313/tags/"></a>]</span>
+<br>    
+    </p>
+  <h1 class="tc">//backup LeNet5 Demo</h1>
+  <hr>
+  <div>
+    
+
+<div id="control">
+<input id="appCanvasReset" type="button" value="clear">
+</div>
+<p><canvas id="canvasInput"  width=512 height=512 style="outline: 3px solid red !important;"></canvas></p>
+
+<h1 id="output" class="tc">
+<br>output
+</h1><p><canvas id="canvasViewport" width=1080 height=1920></canvas></p>
+<!-- ![asd](https://upload.wikimedia.org/wikipedia/commons/6/61/LeNet_architecture.png) -->
+
+<div class="highlight" inject="true"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="ln">  1</span><span class="cl"><span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">  2</span><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="ln">  3</span><span class="cl">
+</span></span><span class="line"><span class="ln">  4</span><span class="cl"><span class="kr">const</span> <span class="nx">canvasInput</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;canvasInput&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">  5</span><span class="cl"><span class="kr">const</span> <span class="nx">canvasInputCtx</span> <span class="o">=</span> <span class="nx">canvasInput</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;2d&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;alpha&#34;</span><span class="o">:</span><span class="kc">false</span><span class="p">});</span>
+</span></span><span class="line"><span class="ln">  6</span><span class="cl"><span class="kr">const</span> <span class="nx">canvasViewport</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;canvasViewport&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">  7</span><span class="cl"><span class="kr">const</span> <span class="nx">canvasViewportCtx</span> <span class="o">=</span> <span class="nx">canvasViewport</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="s2">&#34;2d&#34;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&#34;alpha&#34;</span><span class="o">:</span><span class="kc">false</span><span class="p">});</span>
+</span></span><span class="line"><span class="ln">  8</span><span class="cl"><span class="kr">const</span> <span class="nx">ftoi</span> <span class="o">=</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="o">~~</span><span class="nx">v</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">  9</span><span class="cl"><span class="kr">const</span> <span class="nx">arrcp</span> <span class="o">=</span> <span class="p">(</span><span class="nx">src</span><span class="p">,</span> <span class="nx">dst</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">src</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span><span class="nx">dst</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="o">=</span><span class="nx">src</span><span class="p">[</span><span class="nx">i</span><span class="p">]}}</span>
+</span></span><span class="line"><span class="ln"> 10</span><span class="cl"><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 11</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 12</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 13</span><span class="cl"><span class="kr">class</span> <span class="nx">cCursorHandler</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 14</span><span class="cl">  <span class="nx">flags</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;idle&#39;</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;move&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 15</span><span class="cl">  <span class="nx">constructor</span> <span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">callback</span><span class="o">=</span><span class="p">(</span><span class="nx">handler</span><span class="p">)=&gt;{})</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 16</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">el</span> <span class="o">=</span> <span class="nx">el</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 17</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">cb</span> <span class="o">=</span> <span class="nx">callback</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 18</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">w</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 19</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">h</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 20</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">flag</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">flags</span><span class="p">.</span><span class="nx">idle</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 21</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">pos</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln"> 22</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span> <span class="o">=</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 23</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">prev</span> <span class="o">=</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 24</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">ratio</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln"> 25</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">ratio</span><span class="p">.</span><span class="nx">curr</span> <span class="o">=</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 26</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">ratio</span><span class="p">.</span><span class="nx">prev</span> <span class="o">=</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 27</span><span class="cl">    <span class="nx">el</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&#34;mousemove&#34;</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)=&gt;{</span><span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span> <span class="k">this</span><span class="p">.</span><span class="nx">flag</span><span class="o">|=</span><span class="k">this</span><span class="p">.</span><span class="nx">flags</span><span class="p">.</span><span class="nx">move</span><span class="p">;</span> <span class="k">this</span><span class="p">.</span><span class="nx">cb</span><span class="p">(</span><span class="k">this</span><span class="p">)});</span>
+</span></span><span class="line"><span class="ln"> 28</span><span class="cl">    <span class="nx">el</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&#34;mousedown&#34;</span><span class="p">,</span> <span class="p">(</span><span class="nx">event</span><span class="p">)=&gt;{</span><span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span> <span class="k">this</span><span class="p">.</span><span class="nx">flag</span><span class="o">|=</span><span class="k">this</span><span class="p">.</span><span class="nx">flags</span><span class="p">.</span><span class="nx">down</span><span class="p">;</span> <span class="k">this</span><span class="p">.</span><span class="nx">cb</span><span class="p">(</span><span class="k">this</span><span class="p">)});</span>
+</span></span><span class="line"><span class="ln"> 29</span><span class="cl">    <span class="nx">el</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&#34;mouseup&#34;</span><span class="p">,</span>   <span class="p">(</span><span class="nx">event</span><span class="p">)=&gt;{</span><span class="k">this</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span> <span class="k">this</span><span class="p">.</span><span class="nx">flag</span><span class="o">=</span><span class="k">this</span><span class="p">.</span><span class="nx">flags</span><span class="p">.</span><span class="nx">idle</span><span class="p">;</span>  <span class="k">this</span><span class="p">.</span><span class="nx">cb</span><span class="p">(</span><span class="k">this</span><span class="p">)});</span>
+</span></span><span class="line"><span class="ln"> 30</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 31</span><span class="cl">  <span class="nx">update</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 32</span><span class="cl">    <span class="kd">let</span> <span class="nx">bcr</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">el</span><span class="p">.</span><span class="nx">getBoundingClientRect</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln"> 33</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">prev</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 34</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">prev</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 35</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">ratio</span><span class="p">.</span><span class="nx">prev</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">ratio</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">x</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 36</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">ratio</span><span class="p">.</span><span class="nx">prev</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">ratio</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">y</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 37</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">ratio</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">clientX</span> <span class="o">-</span> <span class="nx">bcr</span><span class="p">.</span><span class="nx">left</span><span class="p">)</span> <span class="o">/</span> <span class="nx">bcr</span><span class="p">.</span><span class="nx">width</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 38</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">ratio</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">clientY</span> <span class="o">-</span> <span class="nx">bcr</span><span class="p">.</span><span class="nx">top</span><span class="p">)</span> <span class="o">/</span> <span class="nx">bcr</span><span class="p">.</span><span class="nx">height</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 39</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">ftoi</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">ratio</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">x</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 40</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nx">ftoi</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">ratio</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">y</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">h</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 41</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 42</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 43</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 44</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 45</span><span class="cl"><span class="kr">class</span> <span class="nx">Interp</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 46</span><span class="cl">  <span class="kr">static</span> <span class="nx">lk2</span><span class="p">(</span><span class="nx">wa</span><span class="p">,</span> <span class="nx">ha</span><span class="p">,</span> <span class="nx">wb</span><span class="p">,</span> <span class="nx">hb</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 47</span><span class="cl">    <span class="kd">let</span> <span class="nx">rx</span><span class="p">,</span> <span class="nx">ry</span><span class="p">,</span> <span class="nx">ax</span><span class="p">,</span> <span class="nx">ay</span><span class="p">,</span> <span class="nx">bx</span><span class="p">,</span> <span class="nx">by</span><span class="p">,</span> <span class="nx">bxl</span><span class="p">,</span> <span class="nx">bxh</span><span class="p">,</span> <span class="nx">byl</span><span class="p">,</span> <span class="nx">byh</span><span class="p">,</span> <span class="nx">wx</span><span class="p">,</span> <span class="nx">wy</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 48</span><span class="cl">    <span class="nx">rx</span> <span class="o">=</span> <span class="p">(</span><span class="nx">wa</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nx">wDst</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 49</span><span class="cl">    <span class="nx">ry</span> <span class="o">=</span> <span class="p">(</span><span class="nx">wa</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nx">hDst</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 50</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="nx">ax</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">ax</span><span class="o">&lt;</span><span class="nx">wDst</span><span class="p">;</span> <span class="nx">ax</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 51</span><span class="cl">      <span class="k">for</span> <span class="p">(</span><span class="nx">ay</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">ay</span><span class="o">&lt;</span><span class="nx">hDst</span><span class="p">;</span> <span class="nx">ay</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 52</span><span class="cl">        <span class="nx">bxl</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">rx</span> <span class="o">*</span> <span class="nx">ax</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 53</span><span class="cl">        <span class="nx">bxr</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span> <span class="p">(</span><span class="nx">rx</span> <span class="o">*</span> <span class="nx">ax</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 54</span><span class="cl">        <span class="nx">byl</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">ry</span> <span class="o">*</span> <span class="nx">ay</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 55</span><span class="cl">        <span class="nx">byr</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span> <span class="p">(</span><span class="nx">ry</span> <span class="o">*</span> <span class="nx">ay</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 56</span><span class="cl">        <span class="nx">wx</span> <span class="o">=</span> <span class="nx">rx</span><span class="o">*</span><span class="nx">ax</span><span class="o">-</span><span class="nx">bxl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 57</span><span class="cl">        <span class="nx">wy</span> <span class="o">=</span> <span class="nx">ry</span><span class="o">*</span><span class="nx">ay</span><span class="o">-</span><span class="nx">byl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 58</span><span class="cl">        <span class="nx">callback</span><span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 59</span><span class="cl">          <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 60</span><span class="cl">          <span class="nx">bxl</span><span class="o">+</span><span class="nx">wSrc</span><span class="o">*</span><span class="nx">byl</span><span class="p">,</span> <span class="nx">bxl</span><span class="o">+</span><span class="nx">wSrc</span><span class="o">*</span><span class="nx">byr</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 61</span><span class="cl">          <span class="nx">bxr</span><span class="o">+</span><span class="nx">wSrc</span><span class="o">*</span><span class="nx">byl</span><span class="p">,</span> <span class="nx">bxr</span><span class="o">+</span><span class="nx">wSrc</span><span class="o">*</span><span class="nx">byr</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 62</span><span class="cl">          <span class="nx">wx</span><span class="p">,</span> <span class="nx">wy</span>
+</span></span><span class="line"><span class="ln"> 63</span><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 64</span><span class="cl">      <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 65</span><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 66</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 67</span><span class="cl">  <span class="kr">static</span> <span class="nx">nearest</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">t</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 68</span><span class="cl">    <span class="k">return</span> <span class="nx">t</span> <span class="o">&gt;=</span> <span class="p">.</span><span class="mi">5</span> <span class="o">?</span> <span class="nx">b</span> <span class="o">:</span> <span class="nx">a</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln"> 69</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 70</span><span class="cl">  <span class="kr">static</span> <span class="nx">binearest</span><span class="p">(</span><span class="nx">a1</span><span class="p">,</span> <span class="nx">b1</span><span class="p">,</span> <span class="nx">a2</span><span class="p">,</span> <span class="nx">b2</span><span class="p">,</span> <span class="nx">t1</span><span class="p">,</span> <span class="nx">t2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 71</span><span class="cl">    <span class="k">return</span> <span class="nx">Interp</span><span class="p">.</span><span class="nx">nearest</span><span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 72</span><span class="cl">      <span class="nx">Interp</span><span class="p">.</span><span class="nx">nearest</span><span class="p">(</span><span class="nx">a1</span><span class="p">,</span> <span class="nx">b1</span><span class="p">,</span> <span class="nx">t1</span><span class="p">),</span>
+</span></span><span class="line"><span class="ln"> 73</span><span class="cl">      <span class="nx">Interp</span><span class="p">.</span><span class="nx">nearest</span><span class="p">(</span><span class="nx">a2</span><span class="p">,</span> <span class="nx">b2</span><span class="p">,</span> <span class="nx">t1</span><span class="p">),</span>
+</span></span><span class="line"><span class="ln"> 74</span><span class="cl">      <span class="nx">t2</span>
+</span></span><span class="line"><span class="ln"> 75</span><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 76</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 77</span><span class="cl">  <span class="kr">static</span> <span class="nx">binearest_a</span><span class="p">(</span><span class="nx">arrDst</span><span class="p">,</span> <span class="nx">wDst</span><span class="p">,</span> <span class="nx">hDst</span><span class="p">,</span> <span class="nx">arrSrc</span><span class="p">,</span> <span class="nx">wSrc</span><span class="p">,</span> <span class="nx">hSrc</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 78</span><span class="cl">    <span class="nx">Interp</span><span class="p">.</span><span class="nx">lk2</span><span class="p">(</span><span class="nx">wDst</span><span class="p">,</span> <span class="nx">hDst</span><span class="p">,</span> <span class="nx">wSrcm</span> <span class="nx">hSrc</span><span class="p">,</span> <span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="nx">xlyl</span><span class="p">,</span> <span class="nx">xlyh</span><span class="p">,</span> <span class="nx">xhyl</span><span class="p">,</span> <span class="nx">xhyh</span><span class="p">,</span> <span class="nx">wx</span><span class="p">,</span> <span class="nx">wy</span><span class="p">)=&gt;{</span>
+</span></span><span class="line"><span class="ln"> 79</span><span class="cl">      <span class="nx">arrDst</span><span class="p">[</span><span class="nx">x</span><span class="o">*</span><span class="nx">wDst</span><span class="o">+</span><span class="nx">y</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Interp</span><span class="p">.</span><span class="nx">binearest</span><span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 80</span><span class="cl">        <span class="nx">arrSrc</span><span class="p">[</span><span class="nx">xlyl</span><span class="p">],</span> <span class="nx">arrSrc</span><span class="p">[</span><span class="nx">xhyl</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln"> 81</span><span class="cl">        <span class="nx">arrSrc</span><span class="p">[</span><span class="nx">xlyh</span><span class="p">],</span> <span class="nx">arrSrc</span><span class="p">[</span><span class="nx">xhyh</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln"> 82</span><span class="cl">        <span class="nx">wx</span><span class="p">,</span> <span class="nx">wy</span>
+</span></span><span class="line"><span class="ln"> 83</span><span class="cl">      <span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 84</span><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="ln"> 85</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 86</span><span class="cl">  <span class="kr">static</span> <span class="nx">binearest_m</span><span class="p">(</span><span class="nx">mDst</span><span class="p">,</span> <span class="nx">mSrc</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 87</span><span class="cl">    <span class="nx">Interp</span><span class="p">.</span><span class="nx">binearest_a</span><span class="p">(</span><span class="nx">mDst</span><span class="p">.</span><span class="nx">buf</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">.</span><span class="nx">w</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">.</span><span class="nx">h</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 88</span><span class="cl">                      <span class="nx">mSrc</span><span class="p">.</span><span class="nx">buf</span><span class="p">,</span> <span class="nx">mSrc</span><span class="p">.</span><span class="nx">w</span><span class="p">,</span> <span class="nx">mSrc</span><span class="p">.</span><span class="nx">h</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln"> 89</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 90</span><span class="cl">  <span class="kr">static</span> <span class="nx">linear</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">t</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 91</span><span class="cl">    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="p">(</span><span class="nx">b</span> <span class="o">-</span> <span class="nx">a</span><span class="p">)</span> <span class="o">*</span> <span class="nx">t</span>
+</span></span><span class="line"><span class="ln"> 92</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln"> 93</span><span class="cl">  <span class="kr">static</span> <span class="nx">bilinear</span><span class="p">(</span><span class="nx">a1</span><span class="p">,</span> <span class="nx">b1</span><span class="p">,</span> <span class="nx">a2</span><span class="p">,</span> <span class="nx">b2</span><span class="p">,</span> <span class="nx">t1</span><span class="p">,</span> <span class="nx">t2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 94</span><span class="cl">    <span class="k">return</span> <span class="nx">Interp</span><span class="p">.</span><span class="nx">linear</span><span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 95</span><span class="cl">      <span class="nx">Interp</span><span class="p">.</span><span class="nx">linear</span><span class="p">(</span><span class="nx">a1</span><span class="p">,</span> <span class="nx">b1</span><span class="p">,</span> <span class="nx">t1</span><span class="p">),</span>
+</span></span><span class="line"><span class="ln"> 96</span><span class="cl">      <span class="nx">Interp</span><span class="p">.</span><span class="nx">linear</span><span class="p">(</span><span class="nx">a2</span><span class="p">,</span> <span class="nx">b2</span><span class="p">,</span> <span class="nx">t1</span><span class="p">),</span>
+</span></span><span class="line"><span class="ln"> 97</span><span class="cl">      <span class="nx">t2</span>
+</span></span><span class="line"><span class="ln"> 98</span><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 99</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln">100</span><span class="cl">  <span class="kr">static</span> <span class="nx">bilinear_a</span><span class="p">(</span><span class="nx">arrDst</span><span class="p">,</span> <span class="nx">wDst</span><span class="p">,</span> <span class="nx">hDst</span><span class="p">,</span> <span class="nx">arrSrc</span><span class="p">,</span> <span class="nx">wSrc</span><span class="p">,</span> <span class="nx">hSrc</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">101</span><span class="cl">    <span class="kd">let</span> <span class="nx">ax</span><span class="p">,</span> <span class="nx">ay</span><span class="p">,</span> <span class="nx">rx</span><span class="p">,</span> <span class="nx">ry</span><span class="p">,</span> <span class="nx">wx</span><span class="p">,</span> <span class="nx">wy</span><span class="p">,</span> <span class="nx">bxl</span><span class="p">,</span> <span class="nx">bxr</span><span class="p">,</span> <span class="nx">byl</span><span class="p">,</span> <span class="nx">byr</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">102</span><span class="cl">    <span class="nx">rx</span> <span class="o">=</span> <span class="p">(</span><span class="nx">wSrc</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nx">wDst</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">103</span><span class="cl">    <span class="nx">ry</span> <span class="o">=</span> <span class="p">(</span><span class="nx">hSrc</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nx">hDst</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">104</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="nx">ax</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">ax</span><span class="o">&lt;</span><span class="nx">wDst</span><span class="p">;</span> <span class="nx">ax</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">105</span><span class="cl">      <span class="k">for</span> <span class="p">(</span><span class="nx">ay</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">ay</span><span class="o">&lt;</span><span class="nx">hDst</span><span class="p">;</span> <span class="nx">ay</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">106</span><span class="cl">        <span class="nx">bxl</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">rx</span> <span class="o">*</span> <span class="nx">ax</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">107</span><span class="cl">        <span class="nx">bxr</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span> <span class="p">(</span><span class="nx">rx</span> <span class="o">*</span> <span class="nx">ax</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">108</span><span class="cl">        <span class="nx">byl</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">ry</span> <span class="o">*</span> <span class="nx">ay</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">109</span><span class="cl">        <span class="nx">byr</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">ceil</span> <span class="p">(</span><span class="nx">ry</span> <span class="o">*</span> <span class="nx">ay</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">110</span><span class="cl">        <span class="nx">wx</span> <span class="o">=</span> <span class="nx">rx</span><span class="o">*</span><span class="nx">ax</span><span class="o">-</span><span class="nx">bxl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">111</span><span class="cl">        <span class="nx">wy</span> <span class="o">=</span> <span class="nx">ry</span><span class="o">*</span><span class="nx">ay</span><span class="o">-</span><span class="nx">byl</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">112</span><span class="cl">        <span class="nx">arrDst</span><span class="p">[</span><span class="nx">ax</span><span class="o">+</span><span class="nx">ay</span><span class="o">*</span><span class="nx">wDst</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Interp</span><span class="p">.</span><span class="nx">bilinear</span><span class="p">(</span>
+</span></span><span class="line"><span class="ln">113</span><span class="cl">          <span class="nx">arrSrc</span><span class="p">[</span><span class="nx">bxl</span><span class="o">+</span><span class="nx">wSrc</span><span class="o">*</span><span class="nx">byl</span><span class="p">],</span> <span class="nx">arrSrc</span><span class="p">[</span><span class="nx">bxr</span><span class="o">+</span><span class="nx">wSrc</span><span class="o">*</span><span class="nx">byl</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">114</span><span class="cl">          <span class="nx">arrSrc</span><span class="p">[</span><span class="nx">bxl</span><span class="o">+</span><span class="nx">wSrc</span><span class="o">*</span><span class="nx">byr</span><span class="p">],</span> <span class="nx">arrSrc</span><span class="p">[</span><span class="nx">bxr</span><span class="o">+</span><span class="nx">wSrc</span><span class="o">*</span><span class="nx">byr</span><span class="p">],</span>
+</span></span><span class="line"><span class="ln">115</span><span class="cl">          <span class="nx">wx</span><span class="p">,</span> <span class="nx">wy</span>
+</span></span><span class="line"><span class="ln">116</span><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="ln">117</span><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="ln">118</span><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="ln">119</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln">120</span><span class="cl">  <span class="kr">static</span> <span class="nx">bilinear_m</span><span class="p">(</span><span class="nx">mDst</span><span class="p">,</span> <span class="nx">mSrc</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">121</span><span class="cl">    <span class="nx">Interp</span><span class="p">.</span><span class="nx">bilinear_a</span><span class="p">(</span><span class="nx">mDst</span><span class="p">.</span><span class="nx">buf</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">.</span><span class="nx">w</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">.</span><span class="nx">h</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">122</span><span class="cl">                      <span class="nx">mSrc</span><span class="p">.</span><span class="nx">buf</span><span class="p">,</span> <span class="nx">mSrc</span><span class="p">.</span><span class="nx">w</span><span class="p">,</span> <span class="nx">mSrc</span><span class="p">.</span><span class="nx">h</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">123</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln">124</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">125</span><span class="cl">
+</span></span><span class="line"><span class="ln">126</span><span class="cl">
+</span></span><span class="line"><span class="ln">127</span><span class="cl"><span class="kr">class</span> <span class="nx">cFloat32Matrix</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">128</span><span class="cl">  <span class="nx">constructor</span> <span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">h</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">129</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">w</span> <span class="o">=</span> <span class="nx">w</span><span class="p">;</span> <span class="k">this</span><span class="p">.</span><span class="nx">h</span> <span class="o">=</span> <span class="nx">h</span><span class="p">;</span> <span class="k">this</span><span class="p">.</span><span class="nx">l</span> <span class="o">=</span> <span class="nx">w</span><span class="o">*</span><span class="nx">h</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">130</span><span class="cl">    <span class="k">this</span><span class="p">.</span><span class="nx">buf</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">l</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">131</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">132</span><span class="cl">  <span class="nx">itox</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">i</span> <span class="o">%</span> <span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">133</span><span class="cl">  <span class="nx">itoy</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">ftoi</span><span class="p">(</span><span class="nx">i</span> <span class="o">/</span> <span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">134</span><span class="cl">  <span class="nx">ctoi</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="p">(</span><span class="nx">y</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">135</span><span class="cl">  <span class="nx">get</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span><span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">ctoi</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)]};</span>
+</span></span><span class="line"><span class="ln">136</span><span class="cl">  <span class="nx">set</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">ctoi</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)]</span> <span class="o">=</span> <span class="nx">v</span><span class="p">;};</span>
+</span></span><span class="line"><span class="ln">137</span><span class="cl">  <span class="nx">add</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="k">this</span><span class="p">.</span><span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span><span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="nx">v</span><span class="p">}};</span>
+</span></span><span class="line"><span class="ln">138</span><span class="cl">  <span class="nx">mul</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="k">this</span><span class="p">.</span><span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span><span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">*</span> <span class="nx">v</span><span class="p">}};</span>
+</span></span><span class="line"><span class="ln">139</span><span class="cl">  <span class="nx">map</span><span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="p">{</span><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="k">this</span><span class="p">.</span><span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span><span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">callback</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">i</span><span class="p">])}};</span>
+</span></span><span class="line"><span class="ln">140</span><span class="cl">  <span class="nx">zeros</span><span class="p">()</span> <span class="p">{</span><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">}};</span>
+</span></span><span class="line"><span class="ln">141</span><span class="cl">  <span class="nx">load2DArray</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">142</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">x</span><span class="o">&lt;</span><span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">;</span> <span class="nx">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">143</span><span class="cl">      <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">y</span><span class="o">&lt;</span><span class="k">this</span><span class="p">.</span><span class="nx">h</span><span class="p">;</span> <span class="nx">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">144</span><span class="cl">        <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">y</span><span class="p">][</span><span class="nx">x</span><span class="p">]);</span>
+</span></span><span class="line"><span class="ln">145</span><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="ln">146</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">147</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln">148</span><span class="cl">  <span class="nx">loadImageData</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">149</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">+=</span><span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">150</span><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">ftoi</span><span class="p">(</span><span class="nx">i</span><span class="o">/</span><span class="mi">4</span><span class="p">)]</span> <span class="o">=</span> <span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">255</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">151</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">152</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln">153</span><span class="cl">  <span class="nx">unloadImageData</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">154</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">+=</span><span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">155</span><span class="cl">      <span class="kd">let</span> <span class="nx">p</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">ftoi</span><span class="p">(</span><span class="nx">i</span><span class="o">/</span><span class="mi">4</span><span class="p">)];</span>
+</span></span><span class="line"><span class="ln">156</span><span class="cl">      <span class="nx">p</span> <span class="o">=</span> <span class="nx">p</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="nx">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">157</span><span class="cl">      <span class="nx">p</span> <span class="o">=</span> <span class="nx">p</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="nx">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">158</span><span class="cl">      <span class="nx">p</span> <span class="o">=</span> <span class="nx">ftoi</span><span class="p">(</span><span class="nx">p</span> <span class="o">*</span> <span class="mi">255</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">159</span><span class="cl">      <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nx">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">160</span><span class="cl">      <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">161</span><span class="cl">      <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nx">p</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">162</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">163</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln">164</span><span class="cl">  <span class="nx">upscaleInset</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">165</span><span class="cl">    <span class="kd">let</span> <span class="nx">scale</span> <span class="o">=</span> <span class="nx">ftoi</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">w</span> <span class="o">/</span> <span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">166</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">x</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">x</span><span class="o">&lt;</span><span class="k">this</span><span class="p">.</span><span class="nx">w</span><span class="p">;</span> <span class="nx">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">167</span><span class="cl">      <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">y</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">y</span><span class="o">&lt;</span><span class="k">this</span><span class="p">.</span><span class="nx">h</span><span class="p">;</span> <span class="nx">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">168</span><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">scale</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">169</span><span class="cl">          <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="nx">scale</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">170</span><span class="cl">            <span class="nx">m</span><span class="p">.</span><span class="nx">set</span><span class="p">((</span><span class="nx">x</span><span class="o">*</span><span class="nx">scale</span><span class="p">)</span><span class="o">+</span><span class="nx">i</span><span class="p">,</span> <span class="p">(</span><span class="nx">y</span><span class="o">*</span><span class="nx">scale</span><span class="p">)</span><span class="o">+</span><span class="nx">j</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln">171</span><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="ln">172</span><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="ln">173</span><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="ln">174</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">175</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln">176</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">177</span><span class="cl">
+</span></span><span class="line"><span class="ln">178</span><span class="cl">
+</span></span><span class="line"><span class="ln">179</span><span class="cl"><span class="kd">function</span> <span class="nx">canvasSubRoutineDrawDot</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">180</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&#34;white&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">181</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">filter</span> <span class="o">=</span> <span class="s2">&#34;blur(5px)&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">182</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">183</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">arc</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">184</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">fill</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">185</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">186</span><span class="cl">
+</span></span><span class="line"><span class="ln">187</span><span class="cl">
+</span></span><span class="line"><span class="ln">188</span><span class="cl"><span class="kd">function</span> <span class="nx">canvasSubRoutineDrawLine</span><span class="p">(</span><span class="nx">x1</span><span class="p">,</span> <span class="nx">y1</span><span class="p">,</span> <span class="nx">x2</span><span class="p">,</span> <span class="nx">y2</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">189</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s2">&#34;white&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">190</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">filter</span> <span class="o">=</span> <span class="s2">&#34;blur(5px)&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">191</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">lineWidth</span> <span class="o">=</span> <span class="mi">28</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">192</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">lineCap</span> <span class="o">=</span> <span class="s2">&#34;round&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">193</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">beginPath</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">194</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="nx">x1</span><span class="p">,</span> <span class="nx">y1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">195</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">lineTo</span><span class="p">(</span><span class="nx">x2</span><span class="p">,</span> <span class="nx">y2</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">196</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">197</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">198</span><span class="cl">
+</span></span><span class="line"><span class="ln">199</span><span class="cl">
+</span></span><span class="line"><span class="ln">200</span><span class="cl"><span class="kd">function</span> <span class="nx">canvasSubRoutineDrawMatrix</span><span class="p">(</span><span class="nx">mat_src</span><span class="p">,</span> <span class="nx">mat_tmp</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">normalize</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">201</span><span class="cl">  <span class="kr">const</span> <span class="nx">imd</span> <span class="o">=</span> <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">getImageData</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">mat_tmp</span><span class="p">.</span><span class="nx">w</span><span class="p">,</span> <span class="nx">mat_tmp</span><span class="p">.</span><span class="nx">h</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">202</span><span class="cl">  <span class="c1">// Interp.bilinear_m(mat_tmp, mat_src);
+</span></span></span><span class="line"><span class="ln">203</span><span class="cl"><span class="c1"></span>  <span class="nx">Interp</span><span class="p">.</span><span class="nx">bilinear_m</span><span class="p">(</span><span class="nx">mat_tmp</span><span class="p">,</span> <span class="nx">mat_src</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">204</span><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">205</span><span class="cl">    <span class="kd">let</span> <span class="nx">mi</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(...</span><span class="nx">mat_tmp</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">206</span><span class="cl">    <span class="kd">let</span> <span class="nx">ma</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(...</span><span class="nx">mat_tmp</span><span class="p">.</span><span class="nx">buf</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">207</span><span class="cl">    <span class="nx">mat_tmp</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="o">-</span><span class="nx">mi</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">208</span><span class="cl">    <span class="nx">mat_tmp</span><span class="p">.</span><span class="nx">mul</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="nx">ma</span><span class="o">-</span><span class="nx">mi</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">209</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">210</span><span class="cl">  <span class="nx">mat_tmp</span><span class="p">.</span><span class="nx">unloadImageData</span><span class="p">(</span><span class="nx">imd</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">211</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">putImageData</span><span class="p">(</span><span class="nx">imd</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">212</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s2">&#34;blue&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">213</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">rect</span><span class="p">(</span><span class="nx">x</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="nx">y</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="nx">mat_tmp</span><span class="p">.</span><span class="nx">w</span><span class="o">+</span><span class="mi">4</span><span class="p">,</span> <span class="nx">mat_tmp</span><span class="p">.</span><span class="nx">h</span><span class="o">+</span><span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">214</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">215</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">216</span><span class="cl">
+</span></span><span class="line"><span class="ln">217</span><span class="cl">
+</span></span><span class="line"><span class="ln">218</span><span class="cl"><span class="kd">function</span> <span class="nx">canvasSubRoutineDrawDense</span><span class="p">(</span><span class="nx">mat_src</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">w</span><span class="p">,</span> <span class="nx">h</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">219</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">save</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">220</span><span class="cl">  <span class="kd">let</span> <span class="nx">fw</span> <span class="o">=</span> <span class="nx">ftoi</span><span class="p">(</span><span class="nx">w</span> <span class="o">/</span> <span class="nx">mat_src</span><span class="p">.</span><span class="nx">w</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">221</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">mat_src</span><span class="p">.</span><span class="nx">w</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">222</span><span class="cl">    <span class="kd">let</span> <span class="nx">hh</span> <span class="o">=</span> <span class="nx">ftoi</span><span class="p">(</span><span class="nx">h</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="nx">mat_src</span><span class="p">.</span><span class="nx">buf</span><span class="p">[</span><span class="nx">i</span><span class="p">]))</span>
+</span></span><span class="line"><span class="ln">223</span><span class="cl">    <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&#34;white&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">224</span><span class="cl">    <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">fillRect</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">fw</span><span class="o">*</span><span class="nx">i</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">fw</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">225</span><span class="cl">    <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&#34;blue&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">226</span><span class="cl">    <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">fillRect</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">fw</span><span class="o">*</span><span class="nx">i</span><span class="p">,</span><span class="nx">y</span><span class="o">+</span><span class="nx">hh</span><span class="p">,</span><span class="nx">fw</span><span class="p">,</span><span class="nx">h</span><span class="o">-</span><span class="nx">hh</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">227</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">228</span><span class="cl">
+</span></span><span class="line"><span class="ln">229</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">strokeStyle</span> <span class="o">=</span> <span class="s2">&#34;black&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">230</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">mat_src</span><span class="p">.</span><span class="nx">w</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">231</span><span class="cl">    <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">rect</span><span class="p">(</span><span class="nx">x</span><span class="o">+</span><span class="nx">fw</span><span class="o">*</span><span class="nx">i</span><span class="p">,</span><span class="nx">y</span><span class="p">,</span><span class="nx">fw</span><span class="p">,</span><span class="nx">h</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">232</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">233</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">stroke</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">234</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">restore</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">235</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">236</span><span class="cl">
+</span></span><span class="line"><span class="ln">237</span><span class="cl">
+</span></span><span class="line"><span class="ln">238</span><span class="cl"><span class="kd">function</span> <span class="nx">canvasSubRoutineDrawText</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">align</span><span class="o">=</span><span class="s2">&#34;left&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">239</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">240</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&#34;black&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">241</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">font</span> <span class="o">=</span> <span class="s2">&#34;32px monospace&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">242</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">textBaseline</span> <span class="o">=</span> <span class="s2">&#34;middle&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">243</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">textAlign</span> <span class="o">=</span> <span class="nx">align</span> <span class="o">||</span> <span class="s2">&#34;left&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">244</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">fillText</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">245</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">246</span><span class="cl">
+</span></span><span class="line"><span class="ln">247</span><span class="cl">
+</span></span><span class="line"><span class="ln">248</span><span class="cl"><span class="kr">const</span> <span class="nx">temp_buf</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">249</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2032</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">250</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2048</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">48</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">251</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2064</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">252</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2080</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">80</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">253</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2100</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">254</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2140</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">140</span><span class="p">,</span> <span class="mi">140</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">255</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2120</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">120</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">256</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2160</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">160</span><span class="p">,</span> <span class="mi">160</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">257</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2240</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">240</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">258</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2028</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">259</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2014</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">260</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2005</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">261</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2002</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">262</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m1120</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">263</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m1084</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">84</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">264</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m1010</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">265</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">a1120</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="mi">120</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">266</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">a1084</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="mi">84</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">267</span><span class="cl"><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">a1010</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Float32Array</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">268</span><span class="cl">
+</span></span><span class="line"><span class="ln">269</span><span class="cl">
+</span></span><span class="line"><span class="ln">270</span><span class="cl"><span class="kr">const</span> <span class="nx">Sigmoid</span> <span class="o">=</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="nb">Math</span><span class="p">.</span><span class="nx">exp</span><span class="p">(</span><span class="o">-</span><span class="nx">v</span><span class="p">))};</span>
+</span></span><span class="line"><span class="ln">271</span><span class="cl"><span class="kr">const</span> <span class="nx">ReLU</span> <span class="o">=</span> <span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span><span class="k">return</span> <span class="nx">v</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">?</span><span class="mi">0</span><span class="o">:</span><span class="nx">v</span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">272</span><span class="cl">
+</span></span><span class="line"><span class="ln">273</span><span class="cl"><span class="kd">function</span> <span class="nx">conv2d</span> <span class="p">(</span><span class="nx">mSrc</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">,</span> <span class="nx">mKernel</span><span class="p">,</span> <span class="nx">padding</span><span class="p">,</span> <span class="nx">stride</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">274</span><span class="cl">  <span class="kd">let</span> <span class="nx">ki</span><span class="p">,</span> <span class="nx">kx</span><span class="p">,</span> <span class="nx">ky</span><span class="p">,</span> <span class="nx">oi</span><span class="p">,</span> <span class="nx">ox</span><span class="p">,</span> <span class="nx">oy</span><span class="p">,</span> <span class="nx">ix</span><span class="p">,</span> <span class="nx">iy</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">275</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="nx">oi</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">oi</span><span class="o">&lt;</span><span class="nx">mDst</span><span class="p">.</span><span class="nx">l</span><span class="p">;</span> <span class="nx">oi</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="ln">276</span><span class="cl">    <span class="nx">ox</span> <span class="o">=</span> <span class="nx">oi</span><span class="o">%</span><span class="nx">mDst</span><span class="p">.</span><span class="nx">w</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">277</span><span class="cl">    <span class="nx">oy</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">oi</span><span class="o">/</span><span class="nx">mDst</span><span class="p">.</span><span class="nx">w</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">278</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="nx">ki</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">ki</span><span class="o">&lt;</span><span class="nx">mKernel</span><span class="p">.</span><span class="nx">l</span><span class="p">;</span> <span class="nx">ki</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="ln">279</span><span class="cl">      <span class="nx">kx</span> <span class="o">=</span> <span class="nx">ki</span><span class="o">%</span><span class="nx">mKernel</span><span class="p">.</span><span class="nx">w</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">280</span><span class="cl">      <span class="nx">ky</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nx">ki</span><span class="o">/</span><span class="nx">mKernel</span><span class="p">.</span><span class="nx">w</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">281</span><span class="cl">      <span class="nx">ix</span><span class="o">=</span><span class="p">(</span><span class="nx">ox</span><span class="o">*</span><span class="nx">stride</span><span class="p">)</span><span class="o">+</span><span class="nx">kx</span><span class="o">-</span><span class="nx">padding</span><span class="p">;</span> <span class="nx">iy</span><span class="o">=</span><span class="p">(</span><span class="nx">oy</span><span class="o">*</span><span class="nx">stride</span><span class="p">)</span><span class="o">+</span><span class="nx">ky</span><span class="o">-</span><span class="nx">padding</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">282</span><span class="cl">      <span class="nx">callback</span><span class="p">(</span><span class="nx">mSrc</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">,</span> <span class="nx">mKernel</span><span class="p">,</span> <span class="nx">ix</span><span class="p">,</span> <span class="nx">iy</span><span class="p">,</span> <span class="nx">kx</span><span class="p">,</span> <span class="nx">ky</span><span class="p">,</span> <span class="nx">ox</span><span class="p">,</span> <span class="nx">oy</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">283</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">284</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">285</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">286</span><span class="cl">
+</span></span><span class="line"><span class="ln">287</span><span class="cl">
+</span></span><span class="line"><span class="ln">288</span><span class="cl"><span class="kd">function</span> <span class="nx">CNNConv2D</span> <span class="p">(</span><span class="nx">mSrc</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">,</span> <span class="nx">mKernel</span><span class="p">,</span> <span class="nx">padding</span><span class="p">,</span> <span class="nx">stride</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">289</span><span class="cl">  <span class="nx">conv2d</span><span class="p">(</span><span class="nx">mSrc</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">,</span> <span class="nx">mKernel</span><span class="p">,</span> <span class="nx">padding</span><span class="p">,</span> <span class="nx">stride</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">290</span><span class="cl">  <span class="p">(</span><span class="nx">mSrc</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">,</span> <span class="nx">mKernel</span><span class="p">,</span> <span class="nx">ix</span><span class="p">,</span> <span class="nx">iy</span><span class="p">,</span> <span class="nx">kx</span><span class="p">,</span> <span class="nx">ky</span><span class="p">,</span> <span class="nx">ox</span><span class="p">,</span> <span class="nx">oy</span><span class="p">)=&gt;{</span>
+</span></span><span class="line"><span class="ln">291</span><span class="cl">    <span class="nx">mDst</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">ox</span><span class="p">,</span> <span class="nx">oy</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ox</span><span class="p">,</span> <span class="nx">oy</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nx">mSrc</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ix</span><span class="p">,</span> <span class="nx">iy</span><span class="p">)</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="nx">mKernel</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">kx</span><span class="p">,</span> <span class="nx">ky</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">292</span><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="ln">293</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">294</span><span class="cl">
+</span></span><span class="line"><span class="ln">295</span><span class="cl"><span class="kd">function</span> <span class="nx">CNNMaxPooling2D</span> <span class="p">(</span><span class="nx">mSrc</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">,</span> <span class="nx">mKernel</span><span class="p">,</span> <span class="nx">padding</span><span class="p">,</span> <span class="nx">stride</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">296</span><span class="cl">  <span class="nx">conv2d</span><span class="p">(</span><span class="nx">mSrc</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">,</span> <span class="nx">mKernel</span><span class="p">,</span> <span class="nx">padding</span><span class="p">,</span> <span class="nx">stride</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">297</span><span class="cl">  <span class="p">(</span><span class="nx">mSrc</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">,</span> <span class="nx">mKernel</span><span class="p">,</span> <span class="nx">ix</span><span class="p">,</span> <span class="nx">iy</span><span class="p">,</span> <span class="nx">kx</span><span class="p">,</span> <span class="nx">ky</span><span class="p">,</span> <span class="nx">ox</span><span class="p">,</span> <span class="nx">oy</span><span class="p">)=&gt;{</span>
+</span></span><span class="line"><span class="ln">298</span><span class="cl">    <span class="nx">mDst</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">ox</span><span class="p">,</span> <span class="nx">oy</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">((</span><span class="nx">mSrc</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ix</span><span class="p">,</span> <span class="nx">iy</span><span class="p">)</span> <span class="o">||</span> <span class="o">-</span><span class="mf">1e32</span><span class="p">),</span> <span class="nx">mDst</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ox</span><span class="p">,</span> <span class="nx">oy</span><span class="p">)))</span>
+</span></span><span class="line"><span class="ln">299</span><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="ln">300</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">301</span><span class="cl">
+</span></span><span class="line"><span class="ln">302</span><span class="cl"><span class="kd">function</span> <span class="nx">NNLinear</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">A</span><span class="p">,</span> <span class="nx">bias</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">303</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">m</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">m</span><span class="o">&lt;</span><span class="mi">84</span><span class="p">;</span> <span class="nx">m</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">304</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">n</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nx">n</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">305</span><span class="cl">      <span class="nx">buffers</span><span class="p">.</span><span class="nx">fo</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">buf</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">buffers</span><span class="p">.</span><span class="nx">f6</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">buf</span><span class="p">[</span><span class="nx">m</span><span class="p">]</span> <span class="o">*</span> <span class="nx">net</span><span class="p">.</span><span class="nx">fo_linr</span><span class="p">.</span><span class="nx">weight</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">m</span><span class="p">,</span> <span class="nx">n</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">306</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">307</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">308</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">309</span><span class="cl">
+</span></span><span class="line"><span class="ln">310</span><span class="cl"><span class="c1">// LeNet setup
+</span></span></span><span class="line"><span class="ln">311</span><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">buffers</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">312</span><span class="cl"><span class="nx">buffers</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="nx">canvasInput</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">canvasInput</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">313</span><span class="cl"><span class="nx">buffers</span><span class="p">.</span><span class="nx">i0</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">314</span><span class="cl"><span class="nx">buffers</span><span class="p">.</span><span class="nx">c1</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">315</span><span class="cl"><span class="nx">buffers</span><span class="p">.</span><span class="nx">s2</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">316</span><span class="cl"><span class="nx">buffers</span><span class="p">.</span><span class="nx">c3</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">317</span><span class="cl"><span class="nx">buffers</span><span class="p">.</span><span class="nx">s4</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">318</span><span class="cl"><span class="nx">buffers</span><span class="p">.</span><span class="nx">c5</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">319</span><span class="cl"><span class="nx">buffers</span><span class="p">.</span><span class="nx">f6</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">320</span><span class="cl"><span class="nx">buffers</span><span class="p">.</span><span class="nx">fo</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">321</span><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">i0</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">322</span><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">c1</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">323</span><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">s2</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">14</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">324</span><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>  <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">c3</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">325</span><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>  <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">s4</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">326</span><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">c5</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">1</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">327</span><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">f6</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">84</span><span class="p">,</span> <span class="mi">1</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">328</span><span class="cl"><span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">fo</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)};</span>
+</span></span><span class="line"><span class="ln">329</span><span class="cl">
+</span></span><span class="line"><span class="ln">330</span><span class="cl">
+</span></span><span class="line"><span class="ln">331</span><span class="cl"><span class="kr">const</span> <span class="nx">net</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">332</span><span class="cl">
+</span></span><span class="line"><span class="ln">333</span><span class="cl"><span class="c1">// c1_conv.weight
+</span></span></span><span class="line"><span class="ln">334</span><span class="cl"><span class="c1">// c1_conv.bias
+</span></span></span><span class="line"><span class="ln">335</span><span class="cl"><span class="c1">// c3_conv.weight
+</span></span></span><span class="line"><span class="ln">336</span><span class="cl"><span class="c1">// c3_conv.bias
+</span></span></span><span class="line"><span class="ln">337</span><span class="cl"><span class="c1">// c5_conv.weight
+</span></span></span><span class="line"><span class="ln">338</span><span class="cl"><span class="c1">// c5_conv.bias
+</span></span></span><span class="line"><span class="ln">339</span><span class="cl"><span class="c1">// f6_linr.weight
+</span></span></span><span class="line"><span class="ln">340</span><span class="cl"><span class="c1">// f6_linr.bias
+</span></span></span><span class="line"><span class="ln">341</span><span class="cl"><span class="c1">// fo_linr.weight
+</span></span></span><span class="line"><span class="ln">342</span><span class="cl"><span class="c1">// fo_linr.bias
+</span></span></span><span class="line"><span class="ln">343</span><span class="cl"><span class="c1"></span>
+</span></span><span class="line"><span class="ln">344</span><span class="cl"><span class="kd">function</span> <span class="nx">netBuild</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">345</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">c1_conv</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">346</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">s2_pool</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">347</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">348</span><span class="cl">    <span class="nx">net</span><span class="p">.</span><span class="nx">c1_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">349</span><span class="cl">    <span class="nx">net</span><span class="p">.</span><span class="nx">c1_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">350</span><span class="cl">    <span class="nx">net</span><span class="p">.</span><span class="nx">c1_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">kernel</span><span class="p">.</span><span class="nx">load2DArray</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="s1">&#39;c1_conv.weight&#39;</span><span class="p">][</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+</span></span><span class="line"><span class="ln">351</span><span class="cl">    <span class="nx">net</span><span class="p">.</span><span class="nx">c1_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">bias</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="s1">&#39;c1_conv.bias&#39;</span><span class="p">][</span><span class="nx">i</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">352</span><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="ln">353</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">c3_conv</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">354</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">s4_pool</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">355</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">356</span><span class="cl">    <span class="nx">net</span><span class="p">.</span><span class="nx">c3_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">357</span><span class="cl">    <span class="nx">net</span><span class="p">.</span><span class="nx">s4_pool</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">358</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">359</span><span class="cl">      <span class="nx">net</span><span class="p">.</span><span class="nx">c3_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">360</span><span class="cl">      <span class="nx">net</span><span class="p">.</span><span class="nx">c3_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">].</span><span class="nx">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">361</span><span class="cl">      <span class="nx">net</span><span class="p">.</span><span class="nx">c3_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">].</span><span class="nx">kernel</span><span class="p">.</span><span class="nx">load2DArray</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="s1">&#39;c3_conv.weight&#39;</span><span class="p">][</span><span class="nx">j</span><span class="p">][</span><span class="nx">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="ln">362</span><span class="cl">      <span class="nx">net</span><span class="p">.</span><span class="nx">c3_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">].</span><span class="nx">bias</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="s1">&#39;c3_conv.bias&#39;</span><span class="p">][</span><span class="nx">j</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">363</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">364</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">365</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">c5_conv</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">366</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">367</span><span class="cl">    <span class="nx">net</span><span class="p">.</span><span class="nx">c5_conv</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">368</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">k</span><span class="o">&lt;</span><span class="mi">120</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">369</span><span class="cl">      <span class="nx">net</span><span class="p">.</span><span class="nx">c5_conv</span><span class="p">[</span><span class="nx">j</span><span class="p">][</span><span class="nx">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="ln">370</span><span class="cl">      <span class="nx">net</span><span class="p">.</span><span class="nx">c5_conv</span><span class="p">[</span><span class="nx">j</span><span class="p">][</span><span class="nx">k</span><span class="p">].</span><span class="nx">kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">371</span><span class="cl">      <span class="nx">net</span><span class="p">.</span><span class="nx">c5_conv</span><span class="p">[</span><span class="nx">j</span><span class="p">][</span><span class="nx">k</span><span class="p">].</span><span class="nx">kernel</span><span class="p">.</span><span class="nx">load2DArray</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="s1">&#39;c5_conv.weight&#39;</span><span class="p">][</span><span class="nx">k</span><span class="p">][</span><span class="nx">j</span><span class="p">]);</span>
+</span></span><span class="line"><span class="ln">372</span><span class="cl">      <span class="nx">net</span><span class="p">.</span><span class="nx">c5_conv</span><span class="p">[</span><span class="nx">j</span><span class="p">][</span><span class="nx">k</span><span class="p">].</span><span class="nx">bias</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="s1">&#39;c5_conv.bias&#39;</span><span class="p">][</span><span class="nx">k</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">373</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">374</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">375</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">f6_linr</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">376</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">f6_linr</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mi">84</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">377</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">f6_linr</span><span class="p">.</span><span class="nx">weight</span><span class="p">.</span><span class="nx">load2DArray</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="s1">&#39;f6_linr.weight&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="ln">378</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">f6_linr</span><span class="p">.</span><span class="nx">bias</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="s1">&#39;f6_linr.bias&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">379</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">fo_linr</span> <span class="o">=</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="ln">380</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">fo_linr</span><span class="p">.</span><span class="nx">weight</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cFloat32Matrix</span><span class="p">(</span><span class="mi">84</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">381</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">fo_linr</span><span class="p">.</span><span class="nx">weight</span><span class="p">.</span><span class="nx">load2DArray</span><span class="p">(</span><span class="nx">data</span><span class="p">[</span><span class="s1">&#39;fo_linr.weight&#39;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="ln">382</span><span class="cl">  <span class="nx">net</span><span class="p">.</span><span class="nx">fo_linr</span><span class="p">.</span><span class="nx">bias</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="s1">&#39;fo_linr.bias&#39;</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">383</span><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="ln">384</span><span class="cl">
+</span></span><span class="line"><span class="ln">385</span><span class="cl">
+</span></span><span class="line"><span class="ln">386</span><span class="cl"><span class="kd">function</span> <span class="nx">netForward</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">387</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">c1</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">zeros</span><span class="p">()};</span>
+</span></span><span class="line"><span class="ln">388</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">s2</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">zeros</span><span class="p">()};</span>
+</span></span><span class="line"><span class="ln">389</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>  <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">c3</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">zeros</span><span class="p">()};</span>
+</span></span><span class="line"><span class="ln">390</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>  <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">s4</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">zeros</span><span class="p">()};</span>
+</span></span><span class="line"><span class="ln">391</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">c5</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">zeros</span><span class="p">()};</span>
+</span></span><span class="line"><span class="ln">392</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">f6</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">zeros</span><span class="p">()};</span>
+</span></span><span class="line"><span class="ln">393</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>   <span class="p">{</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">fo</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">zeros</span><span class="p">()};</span>
+</span></span><span class="line"><span class="ln">394</span><span class="cl">
+</span></span><span class="line"><span class="ln">395</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">396</span><span class="cl">    <span class="nx">CNNConv2D</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">i0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>  <span class="nx">buffers</span><span class="p">.</span><span class="nx">c1</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">net</span><span class="p">.</span><span class="nx">c1_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">kernel</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">397</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">398</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">399</span><span class="cl">    <span class="nx">buffers</span><span class="p">.</span><span class="nx">c1</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">add</span><span class="p">(</span><span class="nx">net</span><span class="p">.</span><span class="nx">c1_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">bias</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">400</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">401</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">402</span><span class="cl">    <span class="nx">buffers</span><span class="p">.</span><span class="nx">c1</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">map</span><span class="p">(</span><span class="nx">Sigmoid</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">403</span><span class="cl">    <span class="nx">CNNMaxPooling2D</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">c1</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">buffers</span><span class="p">.</span><span class="nx">s2</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2002</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">404</span><span class="cl">    <span class="nx">canvasSubRoutineDrawMatrix</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">c1</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2120</span><span class="p">,</span> <span class="mi">240</span><span class="o">+</span><span class="mi">30</span><span class="o">+</span><span class="mi">25</span><span class="o">+</span><span class="p">(</span><span class="mi">122</span><span class="o">*</span><span class="nx">i</span><span class="p">),</span> <span class="mi">80</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">405</span><span class="cl">    <span class="nx">canvasSubRoutineDrawMatrix</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">s2</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2120</span><span class="p">,</span> <span class="mi">240</span><span class="o">+</span><span class="mi">30</span><span class="o">+</span><span class="mi">25</span><span class="o">+</span><span class="p">(</span><span class="mi">122</span><span class="o">*</span><span class="nx">i</span><span class="p">),</span> <span class="mi">260</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">406</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">407</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">408</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="mi">6</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">409</span><span class="cl">      <span class="nx">CNNConv2D</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">s2</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">buffers</span><span class="p">.</span><span class="nx">c3</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">net</span><span class="p">.</span><span class="nx">c3_conv</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">].</span><span class="nx">kernel</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">410</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">411</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">412</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">413</span><span class="cl">    <span class="nx">buffers</span><span class="p">.</span><span class="nx">c3</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">add</span><span class="p">(</span><span class="nx">net</span><span class="p">.</span><span class="nx">c3_conv</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="nx">j</span><span class="p">].</span><span class="nx">bias</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">414</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">415</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">416</span><span class="cl">    <span class="nx">buffers</span><span class="p">.</span><span class="nx">c3</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">map</span><span class="p">(</span><span class="nx">Sigmoid</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">417</span><span class="cl">    <span class="nx">CNNMaxPooling2D</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">c3</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">buffers</span><span class="p">.</span><span class="nx">s4</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2002</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">418</span><span class="cl">    <span class="nx">buffers</span><span class="p">.</span><span class="nx">c3</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">upscaleInset</span><span class="p">(</span><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2100</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">419</span><span class="cl">    <span class="nx">canvasSubRoutineDrawMatrix</span><span class="p">(</span><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2100</span><span class="p">,</span> <span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2120</span><span class="p">,</span> <span class="mi">30</span><span class="o">+</span><span class="p">(</span><span class="mi">122</span><span class="o">*</span><span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="mi">8</span><span class="p">)),</span> <span class="mi">470</span><span class="o">+</span><span class="mi">122</span><span class="o">*</span><span class="p">(</span><span class="nx">j</span><span class="o">&gt;</span><span class="mi">7</span><span class="o">?</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln">420</span><span class="cl">    <span class="nx">buffers</span><span class="p">.</span><span class="nx">s4</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">upscaleInset</span><span class="p">(</span><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2100</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">421</span><span class="cl">    <span class="nx">canvasSubRoutineDrawMatrix</span><span class="p">(</span><span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2100</span><span class="p">,</span> <span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2120</span><span class="p">,</span> <span class="mi">30</span><span class="o">+</span><span class="p">(</span><span class="mi">122</span><span class="o">*</span><span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="mi">8</span><span class="p">)),</span> <span class="mi">800</span><span class="o">+</span><span class="mi">122</span><span class="o">*</span><span class="p">(</span><span class="nx">j</span><span class="o">&gt;</span><span class="mi">7</span><span class="o">?</span><span class="mi">1</span><span class="o">:</span><span class="mi">0</span><span class="p">));</span>
+</span></span><span class="line"><span class="ln">422</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">423</span><span class="cl">
+</span></span><span class="line"><span class="ln">424</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">k</span><span class="o">&lt;</span><span class="mi">120</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">425</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="mi">16</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">426</span><span class="cl">      <span class="nx">conv2d</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">s4</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">buffers</span><span class="p">.</span><span class="nx">c5</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">net</span><span class="p">.</span><span class="nx">c5_conv</span><span class="p">[</span><span class="nx">j</span><span class="p">][</span><span class="nx">k</span><span class="p">].</span><span class="nx">kernel</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">427</span><span class="cl">      <span class="p">(</span><span class="nx">mSrc</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">,</span> <span class="nx">mKernel</span><span class="p">,</span> <span class="nx">ix</span><span class="p">,</span> <span class="nx">iy</span><span class="p">,</span> <span class="nx">kx</span><span class="p">,</span> <span class="nx">ky</span><span class="p">,</span> <span class="nx">ox</span><span class="p">,</span> <span class="nx">oy</span><span class="p">)=&gt;{</span>
+</span></span><span class="line"><span class="ln">428</span><span class="cl">        <span class="nx">mDst</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">mDst</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="nx">mSrc</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">ix</span><span class="p">,</span> <span class="nx">iy</span><span class="p">)</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="nx">mKernel</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">kx</span><span class="p">,</span> <span class="nx">ky</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">429</span><span class="cl">      <span class="p">})</span>
+</span></span><span class="line"><span class="ln">430</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">431</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">432</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">k</span><span class="o">&lt;</span><span class="mi">120</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="ln">433</span><span class="cl">    <span class="nx">buffers</span><span class="p">.</span><span class="nx">c5</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">buf</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">net</span><span class="p">.</span><span class="nx">c5_conv</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="nx">k</span><span class="p">].</span><span class="nx">bias</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">434</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">435</span><span class="cl">  <span class="nx">buffers</span><span class="p">.</span><span class="nx">c5</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">map</span><span class="p">(</span><span class="nx">Sigmoid</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">436</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">k</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">k</span><span class="o">&lt;</span><span class="mi">120</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">437</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">m</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">m</span><span class="o">&lt;</span><span class="mi">84</span><span class="p">;</span> <span class="nx">m</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">438</span><span class="cl">      <span class="nx">buffers</span><span class="p">.</span><span class="nx">f6</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">buf</span><span class="p">[</span><span class="nx">m</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">buffers</span><span class="p">.</span><span class="nx">c5</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">buf</span><span class="p">[</span><span class="nx">k</span><span class="p">]</span> <span class="o">*</span> <span class="nx">net</span><span class="p">.</span><span class="nx">f6_linr</span><span class="p">.</span><span class="nx">weight</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span> <span class="nx">m</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">439</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">440</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">441</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">m</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">m</span><span class="o">&lt;</span><span class="mi">84</span><span class="p">;</span> <span class="nx">m</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">442</span><span class="cl">    <span class="nx">buffers</span><span class="p">.</span><span class="nx">f6</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">buf</span><span class="p">[</span><span class="nx">m</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">net</span><span class="p">.</span><span class="nx">f6_linr</span><span class="p">.</span><span class="nx">bias</span><span class="p">[</span><span class="nx">m</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">443</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">444</span><span class="cl">  <span class="nx">buffers</span><span class="p">.</span><span class="nx">f6</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">map</span><span class="p">(</span><span class="nx">Sigmoid</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">445</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">m</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">m</span><span class="o">&lt;</span><span class="mi">84</span><span class="p">;</span> <span class="nx">m</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">446</span><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">n</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nx">n</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">447</span><span class="cl">      <span class="nx">buffers</span><span class="p">.</span><span class="nx">fo</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">buf</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">buffers</span><span class="p">.</span><span class="nx">f6</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">buf</span><span class="p">[</span><span class="nx">m</span><span class="p">]</span> <span class="o">*</span> <span class="nx">net</span><span class="p">.</span><span class="nx">fo_linr</span><span class="p">.</span><span class="nx">weight</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">m</span><span class="p">,</span> <span class="nx">n</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">448</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">449</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">450</span><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">n</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">n</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span> <span class="nx">n</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">451</span><span class="cl">    <span class="nx">buffers</span><span class="p">.</span><span class="nx">fo</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">buf</span><span class="p">[</span><span class="nx">n</span><span class="p">]</span> <span class="o">+=</span> <span class="nx">net</span><span class="p">.</span><span class="nx">fo_linr</span><span class="p">.</span><span class="nx">bias</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span>
+</span></span><span class="line"><span class="ln">452</span><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="ln">453</span><span class="cl">  <span class="nx">buffers</span><span class="p">.</span><span class="nx">fo</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">map</span><span class="p">(</span><span class="nx">Sigmoid</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">454</span><span class="cl">  <span class="nx">canvasSubRoutineDrawDense</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">c5</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">1150</span><span class="p">,</span> <span class="nx">canvasViewport</span><span class="p">.</span><span class="nx">width</span><span class="o">-</span><span class="mi">30</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">455</span><span class="cl">  <span class="nx">canvasSubRoutineDrawDense</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">f6</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">1400</span><span class="p">,</span> <span class="nx">canvasViewport</span><span class="p">.</span><span class="nx">width</span><span class="o">-</span><span class="mi">30</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">456</span><span class="cl">  <span class="nx">canvasSubRoutineDrawDense</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">fo</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">1650</span><span class="p">,</span> <span class="nx">canvasViewport</span><span class="p">.</span><span class="nx">width</span><span class="o">-</span><span class="mi">30</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">457</span><span class="cl">
+</span></span><span class="line"><span class="ln">458</span><span class="cl">  <span class="c1">// console.log(buffers.c5[0])
+</span></span></span><span class="line"><span class="ln">459</span><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span><span class="line"><span class="ln">460</span><span class="cl">
+</span></span><span class="line"><span class="ln">461</span><span class="cl"><span class="kd">function</span> <span class="nx">netDrawAnnotation</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">462</span><span class="cl">  <span class="nx">canvasSubRoutineDrawText</span><span class="p">(</span><span class="s2">&#34;input(512x512)&#34;</span><span class="p">,</span> <span class="mi">120</span><span class="o">+</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="s2">&#34;center&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">463</span><span class="cl">  <span class="nx">canvasSubRoutineDrawText</span><span class="p">(</span><span class="s2">&#34;downsamp(28x28)&#34;</span><span class="p">,</span> <span class="mi">120</span><span class="o">+</span><span class="mi">30</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="s2">&#34;center&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">464</span><span class="cl">  <span class="nx">canvasSubRoutineDrawText</span><span class="p">(</span><span class="s2">&#34;C1: Conv2D 5x5pad2 (28x28) x6 (Sigmoid)&#34;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">80</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="s2">&#34;left&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">465</span><span class="cl">  <span class="nx">canvasSubRoutineDrawText</span><span class="p">(</span><span class="s2">&#34;S2: MaxPool 2x2stride2 (14x14) x6&#34;</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">260</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="s2">&#34;left&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">466</span><span class="cl">  <span class="nx">canvasSubRoutineDrawText</span><span class="p">(</span><span class="s2">&#34;C3: Conv2D 5x5 (10x10) x16 (Sigmoid)&#34;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">470</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="s2">&#34;left&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">467</span><span class="cl">  <span class="nx">canvasSubRoutineDrawText</span><span class="p">(</span><span class="s2">&#34;S4: MaxPool 2x2stride2 (5x5) x16&#34;</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">800</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="s2">&#34;left&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">468</span><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="ln">469</span><span class="cl">
+</span></span><span class="line"><span class="ln">470</span><span class="cl">
+</span></span><span class="line"><span class="ln">471</span><span class="cl"><span class="kd">function</span> <span class="nx">appCanvasReset</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">472</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&#34;black&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">473</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">clearRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nx">canvasInput</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="nx">canvasInput</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">474</span><span class="cl">  <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">fillRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nx">canvasInput</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="nx">canvasInput</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">475</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">save</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">476</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">fillStyle</span> <span class="o">=</span> <span class="s2">&#34;white&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">477</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">clearRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nx">canvasViewport</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="nx">canvasViewport</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">478</span><span class="cl">  <span class="nx">canvasViewportCtx</span><span class="p">.</span><span class="nx">fillRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nx">canvasViewport</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="nx">canvasViewport</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">479</span><span class="cl">  <span class="nx">netDrawAnnotation</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">480</span><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="ln">481</span><span class="cl">
+</span></span><span class="line"><span class="ln">482</span><span class="cl">
+</span></span><span class="line"><span class="ln">483</span><span class="cl"><span class="kd">function</span> <span class="nx">appInit</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">484</span><span class="cl">  <span class="kr">const</span> <span class="nx">cursorHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">cCursorHandler</span><span class="p">(</span><span class="nx">canvasInput</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">485</span><span class="cl">    <span class="p">(</span><span class="nx">h</span><span class="p">)=&gt;{</span>
+</span></span><span class="line"><span class="ln">486</span><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">h</span><span class="p">.</span><span class="nx">flag</span> <span class="o">&amp;</span> <span class="nx">h</span><span class="p">.</span><span class="nx">flags</span><span class="p">.</span><span class="nx">down</span> <span class="o">||</span> <span class="nx">h</span><span class="p">.</span><span class="nx">flag</span> <span class="o">===</span> <span class="p">(</span><span class="nx">h</span><span class="p">.</span><span class="nx">flags</span><span class="p">.</span><span class="nx">down</span> <span class="o">|</span> <span class="nx">h</span><span class="p">.</span><span class="nx">flags</span><span class="p">.</span><span class="nx">move</span><span class="p">)){</span>
+</span></span><span class="line"><span class="ln">487</span><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">h</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">x</span> <span class="o">==</span> <span class="nx">h</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">prev</span><span class="p">.</span><span class="nx">x</span> <span class="o">&amp;&amp;</span> <span class="nx">h</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">y</span> <span class="o">==</span> <span class="nx">h</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">prev</span><span class="p">.</span><span class="nx">y</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">488</span><span class="cl">          <span class="nx">canvasSubRoutineDrawDot</span><span class="p">(</span><span class="nx">h</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">489</span><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">490</span><span class="cl">          <span class="nx">canvasSubRoutineDrawLine</span><span class="p">(</span><span class="nx">h</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">prev</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">prev</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">h</span><span class="p">.</span><span class="nx">pos</span><span class="p">.</span><span class="nx">curr</span><span class="p">.</span><span class="nx">y</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">491</span><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="ln">492</span><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="ln">493</span><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">h</span><span class="p">.</span><span class="nx">flag</span> <span class="o">===</span> <span class="nx">h</span><span class="p">.</span><span class="nx">flags</span><span class="p">.</span><span class="nx">idle</span><span class="p">){</span>
+</span></span><span class="line"><span class="ln">494</span><span class="cl">        <span class="nx">appUpdate</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">495</span><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="ln">496</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">497</span><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="ln">498</span><span class="cl">  <span class="c1">// canvasSubRoutineDrawLine(40, 40, 512-40, 512-40)
+</span></span></span><span class="line"><span class="ln">499</span><span class="cl"><span class="c1"></span>  <span class="c1">// canvasSubRoutineDrawLine(120, 512-100, 512-40, 80)
+</span></span></span><span class="line"><span class="ln">500</span><span class="cl"><span class="c1"></span>  <span class="nx">appUpdate</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">501</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">502</span><span class="cl">
+</span></span><span class="line"><span class="ln">503</span><span class="cl">
+</span></span><span class="line"><span class="ln">504</span><span class="cl"><span class="kd">function</span> <span class="nx">appUpdate</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">505</span><span class="cl">  <span class="kr">const</span> <span class="nx">imd</span> <span class="o">=</span> <span class="nx">canvasInputCtx</span><span class="p">.</span><span class="nx">getImageData</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nx">canvasInput</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span><span class="nx">canvasInput</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">506</span><span class="cl">  <span class="nx">buffers</span><span class="p">.</span><span class="nx">input</span><span class="p">.</span><span class="nx">loadImageData</span><span class="p">(</span><span class="nx">imd</span><span class="p">.</span><span class="nx">data</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">507</span><span class="cl">  <span class="nx">Interp</span><span class="p">.</span><span class="nx">binearest_m</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">i0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">buffers</span><span class="p">.</span><span class="nx">input</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">508</span><span class="cl">  <span class="nx">canvasSubRoutineDrawMatrix</span><span class="p">(</span><span class="nx">buffers</span><span class="p">.</span><span class="nx">i0</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">temp_buf</span><span class="p">.</span><span class="nx">m2240</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">80</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">509</span><span class="cl">  <span class="nx">netForward</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">510</span><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="ln">511</span><span class="cl">
+</span></span><span class="line"><span class="ln">512</span><span class="cl">
+</span></span><span class="line"><span class="ln">513</span><span class="cl">
+</span></span><span class="line"><span class="ln">514</span><span class="cl"><span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;./assets/LeNet5.json&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">515</span><span class="cl"><span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">resp</span><span class="p">)=&gt;{</span>
+</span></span><span class="line"><span class="ln">516</span><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="nx">resp</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">517</span><span class="cl">  <span class="nx">resp</span><span class="p">.</span><span class="nx">json</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">518</span><span class="cl">  <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">d</span><span class="p">)=&gt;{</span>
+</span></span><span class="line"><span class="ln">519</span><span class="cl">    <span class="nx">data</span> <span class="o">=</span> <span class="nx">d</span><span class="p">;</span>
+</span></span><span class="line"><span class="ln">520</span><span class="cl">    <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&#34;appCanvasReset&#34;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&#34;click&#34;</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)=&gt;{</span>
+</span></span><span class="line"><span class="ln">521</span><span class="cl">      <span class="nx">appCanvasReset</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">522</span><span class="cl">      <span class="nx">appUpdate</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">523</span><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="ln">524</span><span class="cl">    <span class="nx">appCanvasReset</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">525</span><span class="cl">    <span class="nx">netBuild</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">526</span><span class="cl">    <span class="nx">appInit</span><span class="p">();</span>
+</span></span><span class="line"><span class="ln">527</span><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="ln">528</span><span class="cl">  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">529</span><span class="cl"><span class="p">})</span>
+</span></span><span class="line"><span class="ln">530</span><span class="cl"><span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="ln">531</span><span class="cl"><span class="p">}</span></span></span></code></pre></div>
+
+<script defer>window.onload = function()
+{
+
+const canvasInput = document.getElementById("canvasInput");
+const canvasInputCtx = canvasInput.getContext("2d", {"alpha":false});
+const canvasViewport = document.getElementById("canvasViewport");
+const canvasViewportCtx = canvasViewport.getContext("2d", {"alpha":false});
+const ftoi = (v) => ~~v;
+const arrcp = (src, dst) => {for(let i=0; i<src.length; i++){dst[i]=src[i]}}
+var data = null;
+
+
+class cCursorHandler {
+  flags = {'idle': 0, 'move': 1, 'down': 2};
+  constructor (el, callback=(handler)=>{}) {
+    this.el = el;
+    this.cb = callback;
+    this.w = el.width;
+    this.h = el.height;
+    this.flag = this.flags.idle;
+    this.pos = {};
+    this.pos.curr = {x:0, y:0};
+    this.pos.prev = {x:0, y:0};
+    this.ratio = {};
+    this.ratio.curr = {x:0, y:0};
+    this.ratio.prev = {x:0, y:0};
+    el.addEventListener("mousemove", (event)=>{this.update(event); this.flag|=this.flags.move; this.cb(this)});
+    el.addEventListener("mousedown", (event)=>{this.update(event); this.flag|=this.flags.down; this.cb(this)});
+    el.addEventListener("mouseup",   (event)=>{this.update(event); this.flag=this.flags.idle;  this.cb(this)});
+  };
+  update (event) {
+    let bcr = this.el.getBoundingClientRect();
+    this.pos.prev.x = this.pos.curr.x;
+    this.pos.prev.y = this.pos.curr.y;
+    this.ratio.prev.x = this.ratio.curr.x;
+    this.ratio.prev.y = this.ratio.curr.y;
+    this.ratio.curr.x = (event.clientX - bcr.left) / bcr.width;
+    this.ratio.curr.y = (event.clientY - bcr.top) / bcr.height;
+    this.pos.curr.x = ftoi(this.ratio.curr.x * this.w);
+    this.pos.curr.y = ftoi(this.ratio.curr.y * this.h);
+  };
+}
+
+
+class Interp {
+  static lk2(wa, ha, wb, hb, callback) {
+    let rx, ry, ax, ay, bx, by, bxl, bxh, byl, byh, wx, wy;
+    rx = (wa-1) / (wDst-1);
+    ry = (wa-1) / (hDst-1);
+    for (ax=0; ax<wDst; ax++) {
+      for (ay=0; ay<hDst; ay++) {
+        bxl = Math.floor(rx * ax);
+        bxr = Math.ceil (rx * ax);
+        byl = Math.floor(ry * ay);
+        byr = Math.ceil (ry * ay);
+        wx = rx*ax-bxl;
+        wy = ry*ay-byl;
+        callback(
+          x, y,
+          bxl+wSrc*byl, bxl+wSrc*byr,
+          bxr+wSrc*byl, bxr+wSrc*byr,
+          wx, wy
+        );
+      };
+    };
+  };
+  static nearest(a, b, t) {
+    return t >= .5 ? b : a;
+  };
+  static binearest(a1, b1, a2, b2, t1, t2) {
+    return Interp.nearest(
+      Interp.nearest(a1, b1, t1),
+      Interp.nearest(a2, b2, t1),
+      t2
+    )
+  };
+  static binearest_a(arrDst, wDst, hDst, arrSrc, wSrc, hSrc) {
+    Interp.lk2(wDst, hDst, wSrcm hSrc, (x, y xlyl, xlyh, xhyl, xhyh, wx, wy)=>{
+      arrDst[x*wDst+y] = Interp.binearest(
+        arrSrc[xlyl], arrSrc[xhyl],
+        arrSrc[xlyh], arrSrc[xhyh],
+        wx, wy
+      );
+    });
+  };
+  static binearest_m(mDst, mSrc) {
+    Interp.binearest_a(mDst.buf, mDst.w, mDst.h,
+                      mSrc.buf, mSrc.w, mSrc.h);
+  };
+  static linear(a, b, t) {
+    return a + (b - a) * t
+  };
+  static bilinear(a1, b1, a2, b2, t1, t2) {
+    return Interp.linear(
+      Interp.linear(a1, b1, t1),
+      Interp.linear(a2, b2, t1),
+      t2
+    )
+  };
+  static bilinear_a(arrDst, wDst, hDst, arrSrc, wSrc, hSrc) {
+    let ax, ay, rx, ry, wx, wy, bxl, bxr, byl, byr;
+    rx = (wSrc-1) / (wDst-1);
+    ry = (hSrc-1) / (hDst-1);
+    for (ax=0; ax<wDst; ax++) {
+      for (ay=0; ay<hDst; ay++) {
+        bxl = Math.floor(rx * ax);
+        bxr = Math.ceil (rx * ax);
+        byl = Math.floor(ry * ay);
+        byr = Math.ceil (ry * ay);
+        wx = rx*ax-bxl;
+        wy = ry*ay-byl;
+        arrDst[ax+ay*wDst] = Interp.bilinear(
+          arrSrc[bxl+wSrc*byl], arrSrc[bxr+wSrc*byl],
+          arrSrc[bxl+wSrc*byr], arrSrc[bxr+wSrc*byr],
+          wx, wy
+        );
+      }
+    };
+  };
+  static bilinear_m(mDst, mSrc) {
+    Interp.bilinear_a(mDst.buf, mDst.w, mDst.h,
+                      mSrc.buf, mSrc.w, mSrc.h);
+  };
+}
+
+
+class cFloat32Matrix {
+  constructor (w, h) {
+    this.w = w; this.h = h; this.l = w*h;
+    this.buf = new Float32Array(this.l);
+  }
+  itox(i) {return i % this.w};
+  itoy(i) {return ftoi(i / this.w)};
+  ctoi(x, y) {return x + (y * this.w)};
+  get(x, y) {return this.buf[this.ctoi(x, y)]};
+  set(x, y, v) {this.buf[this.ctoi(x, y)] = v;};
+  add(v) {for (let i=0; i<this.l; i++){this.buf[i] = this.buf[i] + v}};
+  mul(v) {for (let i=0; i<this.l; i++){this.buf[i] = this.buf[i] * v}};
+  map(callback) {for (let i=0; i<this.l; i++){this.buf[i] = callback(this.buf[i])}};
+  zeros() {for (let i=0; i<this.buf.length; i++) {this.buf[i] = 0}};
+  load2DArray(arr) {
+    for (let x=0; x<this.w; x++) {
+      for (let y=0; y<this.h; y++) {
+        this.set(x, y, arr[y][x]);
+      }
+    }
+  };
+  loadImageData(data) {
+    for (let i=0; i<data.length; i+=4) {
+      this.buf[ftoi(i/4)] = (data[i+0] + data[i+1] + data[i+2]) / 3 / 255;
+    }
+  };
+  unloadImageData(data) {
+    for (let i=0; i<data.length; i+=4) {
+      let p = this.buf[ftoi(i/4)];
+      p = p > 1 ? 1 : p;
+      p = p < 0 ? 0 : p;
+      p = ftoi(p * 255);
+      data[i+0] = p;
+      data[i+1] = p;
+      data[i+2] = p;
+    }
+  };
+  upscaleInset(m) {
+    let scale = ftoi(m.w / this.w);
+    for (let x=0; x<this.w; x++) {
+      for (let y=0; y<this.h; y++) {
+        for (let i=0; i<scale; i++) {
+          for (let j=0; j<scale; j++) {
+            m.set((x*scale)+i, (y*scale)+j, this.get(x, y));
+          }
+        }
+      }
+    }
+  };
+}
+
+
+function canvasSubRoutineDrawDot(x, y) {
+  canvasInputCtx.fillStyle = "white";
+  canvasInputCtx.filter = "blur(5px)";
+  canvasInputCtx.beginPath();
+  canvasInputCtx.arc(x, y, 14, 0, 2 * Math.PI);
+  canvasInputCtx.fill();
+}
+
+
+function canvasSubRoutineDrawLine(x1, y1, x2, y2) {
+  canvasInputCtx.strokeStyle = "white";
+  canvasInputCtx.filter = "blur(5px)";
+  canvasInputCtx.lineWidth = 28;
+  canvasInputCtx.lineCap = "round";
+  canvasInputCtx.beginPath();
+  canvasInputCtx.moveTo(x1, y1);
+  canvasInputCtx.lineTo(x2, y2);
+  canvasInputCtx.stroke();
+}
+
+
+function canvasSubRoutineDrawMatrix(mat_src, mat_tmp, x, y, normalize) {
+  const imd = canvasViewportCtx.getImageData(x, y, mat_tmp.w, mat_tmp.h);
+  // Interp.bilinear_m(mat_tmp, mat_src);
+  Interp.bilinear_m(mat_tmp, mat_src);
+  if (true) {
+    let mi = Math.min(...mat_tmp.buf)
+    let ma = Math.max(...mat_tmp.buf)
+    mat_tmp.add(-mi)
+    mat_tmp.mul(1/(ma-mi))
+  }
+  mat_tmp.unloadImageData(imd.data);
+  canvasViewportCtx.putImageData(imd, x, y);
+  canvasViewportCtx.strokeStyle = "blue";
+  canvasViewportCtx.rect(x-2,y-2,mat_tmp.w+4, mat_tmp.h+4);
+  canvasViewportCtx.stroke();
+}
+
+
+function canvasSubRoutineDrawDense(mat_src, x, y, w, h) {
+  canvasViewportCtx.save()
+  let fw = ftoi(w / mat_src.w);
+  for (let i=0; i<mat_src.w; i++) {
+    let hh = ftoi(h*(1-mat_src.buf[i]))
+    canvasViewportCtx.fillStyle = "white";
+    canvasViewportCtx.fillRect(x+fw*i,y,fw,h);
+    canvasViewportCtx.fillStyle = "blue";
+    canvasViewportCtx.fillRect(x+fw*i,y+hh,fw,h-hh);
+  }
+
+  canvasViewportCtx.strokeStyle = "black";
+  for (let i=0; i<mat_src.w; i++) {
+    canvasViewportCtx.rect(x+fw*i,y,fw,h);
+  }
+  canvasViewportCtx.stroke();
+  canvasViewportCtx.restore()
+}
+
+
+function canvasSubRoutineDrawText(text, x, y, align="left") {
+  canvasViewportCtx.save();
+  canvasViewportCtx.fillStyle = "black";
+  canvasViewportCtx.font = "32px monospace";
+  canvasViewportCtx.textBaseline = "middle";
+  canvasViewportCtx.textAlign = align || "left";
+  canvasViewportCtx.fillText(text, x, y);
+}
+
+
+const temp_buf = {};
+temp_buf.m2032 = new cFloat32Matrix(32, 32);
+temp_buf.m2048 = new cFloat32Matrix(48, 48);
+temp_buf.m2064 = new cFloat32Matrix(64, 64);
+temp_buf.m2080 = new cFloat32Matrix(80, 80);
+temp_buf.m2100 = new cFloat32Matrix(100, 100);
+temp_buf.m2140 = new cFloat32Matrix(140, 140);
+temp_buf.m2120 = new cFloat32Matrix(120, 120);
+temp_buf.m2160 = new cFloat32Matrix(160, 160);
+temp_buf.m2240 = new cFloat32Matrix(240, 240);
+temp_buf.m2028 = new cFloat32Matrix(28, 28);
+temp_buf.m2014 = new cFloat32Matrix(14, 14);
+temp_buf.m2005 = new cFloat32Matrix(5, 5);
+temp_buf.m2002 = new cFloat32Matrix(2, 2);
+temp_buf.m1120 = new cFloat32Matrix(120, 1);
+temp_buf.m1084 = new cFloat32Matrix(84, 1);
+temp_buf.m1010 = new cFloat32Matrix(10, 1);
+temp_buf.a1120 = new Float32Array(120);
+temp_buf.a1084 = new Float32Array(84);
+temp_buf.a1010 = new Float32Array(10);
+
+
+const Sigmoid = (v) => {return 1 / (1+Math.exp(-v))};
+const ReLU = (v) => {return v<0?0:v};
+
+function conv2d (mSrc, mDst, mKernel, padding, stride, callback) {
+  let ki, kx, ky, oi, ox, oy, ix, iy;
+  for (oi=0; oi<mDst.l; oi++){
+    ox = oi%mDst.w;
+    oy = Math.floor(oi/mDst.w);
+    for (ki=0; ki<mKernel.l; ki++){
+      kx = ki%mKernel.w;
+      ky = Math.floor(ki/mKernel.w);
+      ix=(ox*stride)+kx-padding; iy=(oy*stride)+ky-padding;
+      callback(mSrc, mDst, mKernel, ix, iy, kx, ky, ox, oy);
+    }
+  }
+}
+
+
+function CNNConv2D (mSrc, mDst, mKernel, padding, stride) {
+  conv2d(mSrc, mDst, mKernel, padding, stride,
+  (mSrc, mDst, mKernel, ix, iy, kx, ky, ox, oy)=>{
+    mDst.set(ox, oy, mDst.get(ox, oy) + (mSrc.get(ix, iy) || 0) * mKernel.get(kx, ky))
+  })
+}
+
+function CNNMaxPooling2D (mSrc, mDst, mKernel, padding, stride) {
+  conv2d(mSrc, mDst, mKernel, padding, stride,
+  (mSrc, mDst, mKernel, ix, iy, kx, ky, ox, oy)=>{
+    mDst.set(ox, oy, Math.max((mSrc.get(ix, iy) || -1e32), mDst.get(ox, oy)))
+  })
+}
+
+function NNLinear(x, y, A, bias) {
+  for (let m=0; m<84; m++) {
+    for (let n=0; n<10; n++) {
+      buffers.fo[0].buf[n] += buffers.f6[0].buf[m] * net.fo_linr.weight.get(m, n);
+    }
+  }
+}
+
+// LeNet setup
+const buffers = {};
+buffers.input = new cFloat32Matrix(canvasInput.width, canvasInput.height);
+buffers.i0 = {};
+buffers.c1 = {};
+buffers.s2 = {};
+buffers.c3 = {};
+buffers.s4 = {};
+buffers.c5 = {};
+buffers.f6 = {};
+buffers.fo = {};
+for (let i=0; i<1; i++)   {buffers.i0[i] = new cFloat32Matrix(28, 28)};
+for (let i=0; i<6; i++)   {buffers.c1[i] = new cFloat32Matrix(28, 28)};
+for (let i=0; i<6; i++)   {buffers.s2[i] = new cFloat32Matrix(14, 14)};
+for (let i=0; i<16; i++)  {buffers.c3[i] = new cFloat32Matrix(10, 10)};
+for (let i=0; i<16; i++)  {buffers.s4[i] = new cFloat32Matrix(5, 5)};
+for (let i=0; i<1; i++)   {buffers.c5[i] = new cFloat32Matrix(120, 1)};
+for (let i=0; i<1; i++)   {buffers.f6[i] = new cFloat32Matrix(84, 1)};
+for (let i=0; i<1; i++)   {buffers.fo[i] = new cFloat32Matrix(10, 1)};
+
+
+const net = {};
+
+// c1_conv.weight
+// c1_conv.bias
+// c3_conv.weight
+// c3_conv.bias
+// c5_conv.weight
+// c5_conv.bias
+// f6_linr.weight
+// f6_linr.bias
+// fo_linr.weight
+// fo_linr.bias
+
+function netBuild() {
+  net.c1_conv = {}
+  net.s2_pool = {}
+  for (let i=0; i<6; i++) {
+    net.c1_conv[i] = {};
+    net.c1_conv[i].kernel = new cFloat32Matrix(5, 5);
+    net.c1_conv[i].kernel.load2DArray(data['c1_conv.weight'][i][0]);
+    net.c1_conv[i].bias = data['c1_conv.bias'][i];
+  };
+  net.c3_conv = {}
+  net.s4_pool = {}
+  for (let i=0; i<6; i++) {
+    net.c3_conv[i] = {}
+    net.s4_pool[i] = {}
+    for (let j=0; j<16; j++) {
+      net.c3_conv[i][j] = {};
+      net.c3_conv[i][j].kernel = new cFloat32Matrix(5, 5);
+      net.c3_conv[i][j].kernel.load2DArray(data['c3_conv.weight'][j][i]);
+      net.c3_conv[i][j].bias = data['c3_conv.bias'][j];
+    }
+  }
+  net.c5_conv = {}
+  for (let j=0; j<16; j++) {
+    net.c5_conv[j] = {}
+    for (let k=0; k<120; k++) {
+      net.c5_conv[j][k] = {}
+      net.c5_conv[j][k].kernel = new cFloat32Matrix(5, 5);
+      net.c5_conv[j][k].kernel.load2DArray(data['c5_conv.weight'][k][j]);
+      net.c5_conv[j][k].bias = data['c5_conv.bias'][k];
+    }
+  }
+  net.f6_linr = {};
+  net.f6_linr.weight = new cFloat32Matrix(120, 84);
+  net.f6_linr.weight.load2DArray(data['f6_linr.weight']);
+  net.f6_linr.bias = data['f6_linr.bias'];
+  net.fo_linr = {};
+  net.fo_linr.weight = new cFloat32Matrix(84, 10);
+  net.fo_linr.weight.load2DArray(data['fo_linr.weight']);
+  net.fo_linr.bias = data['fo_linr.bias'];
+};
+
+
+function netForward() {
+  for (let i=0; i<6; i++)   {buffers.c1[i].zeros()};
+  for (let i=0; i<6; i++)   {buffers.s2[i].zeros()};
+  for (let i=0; i<16; i++)  {buffers.c3[i].zeros()};
+  for (let i=0; i<16; i++)  {buffers.s4[i].zeros()};
+  for (let i=0; i<1; i++)   {buffers.c5[i].zeros()};
+  for (let i=0; i<1; i++)   {buffers.f6[i].zeros()};
+  for (let i=0; i<1; i++)   {buffers.fo[i].zeros()};
+
+  for (let i=0; i<6; i++) {
+    CNNConv2D(buffers.i0[0],  buffers.c1[i], net.c1_conv[i].kernel, 2, 1);
+  }
+  for (let i=0; i<6; i++) {
+    buffers.c1[i].add(net.c1_conv[i].bias)
+  }
+  for (let i=0; i<6; i++) {
+    buffers.c1[i].map(Sigmoid);
+    CNNMaxPooling2D(buffers.c1[i], buffers.s2[i], temp_buf.m2002, 0, 2);
+    canvasSubRoutineDrawMatrix(buffers.c1[i], temp_buf.m2120, 240+30+25+(122*i), 80);
+    canvasSubRoutineDrawMatrix(buffers.s2[i], temp_buf.m2120, 240+30+25+(122*i), 260);
+  }
+  for (let j=0; j<16; j++) {
+    for (let i=0; i<6; i++) {
+      CNNConv2D(buffers.s2[i], buffers.c3[j], net.c3_conv[i][j].kernel, 0, 1);
+    }
+  }
+  for (let j=0; j<16; j++) {
+    buffers.c3[j].add(net.c3_conv[0][j].bias);
+  }
+  for (let j=0; j<16; j++) {
+    buffers.c3[j].map(Sigmoid);
+    CNNMaxPooling2D(buffers.c3[j], buffers.s4[j], temp_buf.m2002, 0, 2);
+    buffers.c3[j].upscaleInset(temp_buf.m2100);
+    canvasSubRoutineDrawMatrix(temp_buf.m2100, temp_buf.m2120, 30+(122*(j % 8)), 470+122*(j>7?1:0));
+    buffers.s4[j].upscaleInset(temp_buf.m2100);
+    canvasSubRoutineDrawMatrix(temp_buf.m2100, temp_buf.m2120, 30+(122*(j % 8)), 800+122*(j>7?1:0));
+  }
+
+  for (let k=0; k<120; k++) {
+    for (let j=0; j<16; j++) {
+      conv2d(buffers.s4[j], buffers.c5[0], net.c5_conv[j][k].kernel, 0, 1,
+      (mSrc, mDst, mKernel, ix, iy, kx, ky, ox, oy)=>{
+        mDst.set(k, 0, mDst.get(k, 0) + (mSrc.get(ix, iy) || 0) * mKernel.get(kx, ky))
+      })
+    }
+  }
+  for (let k=0; k<120; k++) { 
+    buffers.c5[0].buf[k] += net.c5_conv[0][k].bias;
+  }
+  buffers.c5[0].map(Sigmoid);
+  for (let k=0; k<120; k++) {
+    for (let m=0; m<84; m++) {
+      buffers.f6[0].buf[m] += buffers.c5[0].buf[k] * net.f6_linr.weight.get(k, m);
+    }
+  }
+  for (let m=0; m<84; m++) {
+    buffers.f6[0].buf[m] += net.f6_linr.bias[m];
+  }
+  buffers.f6[0].map(Sigmoid);
+  for (let m=0; m<84; m++) {
+    for (let n=0; n<10; n++) {
+      buffers.fo[0].buf[n] += buffers.f6[0].buf[m] * net.fo_linr.weight.get(m, n);
+    }
+  }
+  for (let n=0; n<10; n++) {
+    buffers.fo[0].buf[n] += net.fo_linr.bias[n];
+  }
+  buffers.fo[0].map(Sigmoid);
+  canvasSubRoutineDrawDense(buffers.c5[0], 30, 1150, canvasViewport.width-30-30, 200)
+  canvasSubRoutineDrawDense(buffers.f6[0], 30, 1400, canvasViewport.width-30-30, 200)
+  canvasSubRoutineDrawDense(buffers.fo[0], 30, 1650, canvasViewport.width-30-30, 200)
+
+  // console.log(buffers.c5[0])
+};
+
+function netDrawAnnotation() {
+  canvasSubRoutineDrawText("input(512x512)", 120+30, 30, "center")
+  canvasSubRoutineDrawText("downsamp(28x28)", 120+30, 60, "center")
+  canvasSubRoutineDrawText("C1: Conv2D 5x5pad2 (28x28) x6 (Sigmoid)", 300, 80-20, "left")
+  canvasSubRoutineDrawText("S2: MaxPool 2x2stride2 (14x14) x6", 300, 260-20, "left")
+  canvasSubRoutineDrawText("C3: Conv2D 5x5 (10x10) x16 (Sigmoid)", 30, 470-20, "left")
+  canvasSubRoutineDrawText("S4: MaxPool 2x2stride2 (5x5) x16", 30, 800-20, "left")
+};
+
+
+function appCanvasReset() {
+  canvasInputCtx.fillStyle = "black";
+  canvasInputCtx.clearRect(0,0,canvasInput.width,canvasInput.height);
+  canvasInputCtx.fillRect(0,0,canvasInput.width,canvasInput.height);
+  canvasViewportCtx.save();
+  canvasViewportCtx.fillStyle = "white";
+  canvasViewportCtx.clearRect(0,0,canvasViewport.width,canvasViewport.height);
+  canvasViewportCtx.fillRect(0,0,canvasViewport.width,canvasViewport.height);
+  netDrawAnnotation()
+};
+
+
+function appInit() {
+  const cursorHandler = new cCursorHandler(canvasInput,
+    (h)=>{
+      if (h.flag & h.flags.down || h.flag === (h.flags.down | h.flags.move)){
+        if (h.pos.curr.x == h.pos.prev.x && h.pos.curr.y == h.pos.prev.y) {
+          canvasSubRoutineDrawDot(h.pos.curr.x, h.pos.curr.y);
+        } else {
+          canvasSubRoutineDrawLine(h.pos.prev.x, h.pos.prev.y, h.pos.curr.x, h.pos.curr.y);
+        }
+      }
+      if (h.flag === h.flags.idle){
+        appUpdate();
+      }
+    }
+  );
+  // canvasSubRoutineDrawLine(40, 40, 512-40, 512-40)
+  // canvasSubRoutineDrawLine(120, 512-100, 512-40, 80)
+  appUpdate();
+}
+
+
+function appUpdate() {
+  const imd = canvasInputCtx.getImageData(0,0,canvasInput.width,canvasInput.height);
+  buffers.input.loadImageData(imd.data);
+  Interp.binearest_m(buffers.i0[0], buffers.input)
+  canvasSubRoutineDrawMatrix(buffers.i0[0], temp_buf.m2240, 30, 80);
+  netForward();
+};
+
+
+
+fetch('./assets/LeNet5.json')
+.then((resp)=>{
+  console.log(resp.url, resp.status);
+  resp.json()
+  .then((d)=>{
+    data = d;
+    document.getElementById("appCanvasReset").addEventListener("click", (e)=>{
+      appCanvasReset();
+      appUpdate();
+    })
+    appCanvasReset();
+    netBuild();
+    appInit();
+  })
+  .catch(console.error);
+})
+.catch(console.error);
+}</script>
+
+
+
+
+
+
+  </div>
+  
+
+  
+  <br>
+  <br>
+  <br>
+  <br>
+  <p class="tc">Built with <a a target="_blank" class="extern" href="https://gohugo.io/">Hugo</a> | previoip (c) 2025</p>
+</body>
+
+</html>
+
+
