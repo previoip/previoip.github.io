@@ -1,1 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Applets on dumb by default</title><link>http://previoip.github.io/applets/</link><description>Recent content in Applets on dumb by default</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Wed, 11 Jun 2025 09:25:04 +0700</lastBuildDate><atom:link href="http://previoip.github.io/applets/index.xml" rel="self" type="application/rss+xml"/><item><title>Conway's game of life</title><link>http://previoip.github.io/applets/gol/</link><pubDate>Wed, 11 Jun 2025 09:25:04 +0700</pubDate><guid>http://previoip.github.io/applets/gol/</guid><description>1window.onload = function() 2{ 3 4const canvas = document.getElementById(&amp;#34;viewport&amp;#34;); 5const ctx = canvas.getContext(&amp;#34;2d&amp;#34;, {&amp;#34;alpha&amp;#34;: false}); 6const ftoi = (v)=&amp;gt;~~v; 7var sim = null; 8 9class acAbstract2DMatrix { 10 itox(i) {return i % this.</description></item><item><title>audio spectrogram</title><link>http://previoip.github.io/applets/spectrogram/</link><pubDate>Fri, 23 May 2025 16:58:16 +0700</pubDate><guid>http://previoip.github.io/applets/spectrogram/</guid><description>cmapinfernoviridisplasmajethotgnuplotturbocubehelixshow second interval markerdouble speedyscalemin dBmax dB1window.</description></item><item><title>canvas api test</title><link>http://previoip.github.io/applets/canvas-test/</link><pubDate>Sat, 17 May 2025 09:39:36 +0700</pubDate><guid>http://previoip.github.io/applets/canvas-test/</guid><description>loop1{ 2 3const canvas = document.getElementById(&amp;#34;viewport&amp;#34;); 4const ctx = canvas.getContext(&amp;#34;2d&amp;#34;, {&amp;#34;alpha&amp;#34;:false}); 5const w = canvas.width; 6const h = canvas.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Applets on dumb by default</title>
+    <link>http://localhost:1313/applets/</link>
+    <description>Recent content in Applets on dumb by default</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 11 Jun 2025 09:25:04 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/applets/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Conway&#39;s game of life</title>
+      <link>http://localhost:1313/applets/gol/</link>
+      <pubDate>Wed, 11 Jun 2025 09:25:04 +0700</pubDate>
+      <guid>http://localhost:1313/applets/gol/</guid>
+      <description>preset&#xD;1window.onload = function() 2{ 3 4const canvas = document.getElementById(&amp;#34;viewport&amp;#34;); 5const ctx = canvas.getContext(&amp;#34;2d&amp;#34;, {&amp;#34;alpha&amp;#34;: false}); 6const ftoi = (v)=&amp;gt;~~v; 7const iwrap = (a, b) =&amp;gt; a&amp;lt;0?</description>
+    </item>
+    <item>
+      <title>audio spectrogram</title>
+      <link>http://localhost:1313/applets/spectrogram/</link>
+      <pubDate>Fri, 23 May 2025 16:58:16 +0700</pubDate>
+      <guid>http://localhost:1313/applets/spectrogram/</guid>
+      <description>cmap&#xD;inferno&#xD;viridis&#xD;plasma&#xD;jet&#xD;hot&#xD;gnuplot&#xD;turbo&#xD;cubehelix&#xD;show second interval marker&#xD;double speed&#xD;yscale&#xD;min dB&#xD;max dB&#xD;1window.</description>
+    </item>
+    <item>
+      <title>canvas api test</title>
+      <link>http://localhost:1313/applets/canvas-test/</link>
+      <pubDate>Sat, 17 May 2025 09:39:36 +0700</pubDate>
+      <guid>http://localhost:1313/applets/canvas-test/</guid>
+      <description>loop&#xD;1{ 2 3const canvas = document.getElementById(&amp;#34;viewport&amp;#34;); 4const ctx = canvas.getContext(&amp;#34;2d&amp;#34;, {&amp;#34;alpha&amp;#34;:false}); 5const w = canvas.width; 6const h = canvas.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,1 +1,61 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on dumb by default</title><link>http://previoip.github.io/categories/</link><description>Recent content in Categories on dumb by default</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Sun, 25 May 2025 21:16:48 +0700</lastBuildDate><atom:link href="http://previoip.github.io/categories/index.xml" rel="self" type="application/rss+xml"/><item><title>Python-Hijinks</title><link>http://previoip.github.io/categories/python-hijinks/</link><pubDate>Sun, 25 May 2025 21:16:48 +0700</pubDate><guid>http://previoip.github.io/categories/python-hijinks/</guid><description/></item><item><title>Quickie</title><link>http://previoip.github.io/categories/quickie/</link><pubDate>Sun, 25 May 2025 21:16:48 +0700</pubDate><guid>http://previoip.github.io/categories/quickie/</guid><description/></item><item><title>Misc</title><link>http://previoip.github.io/categories/misc/</link><pubDate>Fri, 29 Nov 2024 13:22:15 +0700</pubDate><guid>http://previoip.github.io/categories/misc/</guid><description/></item><item><title>You-Tried</title><link>http://previoip.github.io/categories/you-tried/</link><pubDate>Sun, 26 Feb 2023 12:19:47 +0700</pubDate><guid>http://previoip.github.io/categories/you-tried/</guid><description/></item><item><title>Dumber-Day-by-Day</title><link>http://previoip.github.io/categories/dumber-day-by-day/</link><pubDate>Sat, 18 Feb 2023 16:58:55 +0700</pubDate><guid>http://previoip.github.io/categories/dumber-day-by-day/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on dumb by default</title>
+    <link>http://localhost:1313/categories/</link>
+    <description>Recent content in Categories on dumb by default</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 25 May 2025 21:16:48 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Python-Hijinks</title>
+      <link>http://localhost:1313/categories/python-hijinks/</link>
+      <pubDate>Sun, 25 May 2025 21:16:48 +0700</pubDate>
+      <guid>http://localhost:1313/categories/python-hijinks/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Quickie</title>
+      <link>http://localhost:1313/categories/quickie/</link>
+      <pubDate>Sun, 25 May 2025 21:16:48 +0700</pubDate>
+      <guid>http://localhost:1313/categories/quickie/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Misc</title>
+      <link>http://localhost:1313/categories/misc/</link>
+      <pubDate>Tue, 04 Feb 2025 13:26:39 +0700</pubDate>
+      <guid>http://localhost:1313/categories/misc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>You-Tried</title>
+      <link>http://localhost:1313/categories/you-tried/</link>
+      <pubDate>Sun, 26 Feb 2023 12:19:47 +0700</pubDate>
+      <guid>http://localhost:1313/categories/you-tried/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Dumber-Day-by-Day</title>
+      <link>http://localhost:1313/categories/dumber-day-by-day/</link>
+      <pubDate>Sat, 18 Feb 2023 16:58:55 +0700</pubDate>
+      <guid>http://localhost:1313/categories/dumber-day-by-day/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hugo-Theme-Update</title>
+      <link>http://localhost:1313/categories/hugo-theme-update/</link>
+      <pubDate>Sun, 05 Feb 2023 15:10:22 +0700</pubDate>
+      <guid>http://localhost:1313/categories/hugo-theme-update/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Code-Snippets</title>
+      <link>http://localhost:1313/categories/code-snippets/</link>
+      <pubDate>Thu, 19 Jan 2023 21:12:44 +0700</pubDate>
+      <guid>http://localhost:1313/categories/code-snippets/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

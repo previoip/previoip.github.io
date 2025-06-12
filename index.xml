@@ -1,2 +1,138 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Home on dumb by default</title><link>http://previoip.github.io/</link><description>Recent content in Home on dumb by default</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Wed, 11 Jun 2025 09:25:04 +0700</lastBuildDate><atom:link href="http://previoip.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>Conway's game of life</title><link>http://previoip.github.io/applets/gol/</link><pubDate>Wed, 11 Jun 2025 09:25:04 +0700</pubDate><guid>http://previoip.github.io/applets/gol/</guid><description>1window.onload = function() 2{ 3 4const canvas = document.getElementById(&amp;#34;viewport&amp;#34;); 5const ctx = canvas.getContext(&amp;#34;2d&amp;#34;, {&amp;#34;alpha&amp;#34;: false}); 6const ftoi = (v)=&amp;gt;~~v; 7var sim = null; 8 9class acAbstract2DMatrix { 10 itox(i) {return i % this.</description></item><item><title>audio spectrogram</title><link>http://previoip.github.io/applets/spectrogram/</link><pubDate>Fri, 23 May 2025 16:58:16 +0700</pubDate><guid>http://previoip.github.io/applets/spectrogram/</guid><description>cmapinfernoviridisplasmajethotgnuplotturbocubehelixshow second interval markerdouble speedyscalemin dBmax dB1window.</description></item><item><title>canvas api test</title><link>http://previoip.github.io/applets/canvas-test/</link><pubDate>Sat, 17 May 2025 09:39:36 +0700</pubDate><guid>http://previoip.github.io/applets/canvas-test/</guid><description>loop1{ 2 3const canvas = document.getElementById(&amp;#34;viewport&amp;#34;); 4const ctx = canvas.getContext(&amp;#34;2d&amp;#34;, {&amp;#34;alpha&amp;#34;:false}); 5const w = canvas.width; 6const h = canvas.</description></item><item><title>shazamio: shazam on your terminal</title><link>http://previoip.github.io/posts/shazamnnn/</link><pubDate>Wed, 19 Feb 2025 15:02:25 +0700</pubDate><guid>http://previoip.github.io/posts/shazamnnn/</guid><description>I&amp;rsquo;ve switched to soundcloud for a while now after knowing spotify&amp;rsquo;s questionable business practices.
-Living with soundcloud made me realize one thing: most dj sets does not provide track list.</description></item><item><title>Python Hijinks - Permuting Params</title><link>http://previoip.github.io/posts/permuting-configs/</link><pubDate>Wed, 01 Jan 2025 00:15:31 +0700</pubDate><guid>http://previoip.github.io/posts/permuting-configs/</guid><description>Before we begin I must say this yet another &amp;ldquo;might not be best practices and not within standard of writing in python nor extendable to another language&amp;rdquo; ordeal.</description></item><item><title>ffmpeg - I Have No Admin Privilege and I Have To Transcode</title><link>http://previoip.github.io/posts/i-have-no-admin-privilege-and-i-have-to-ffmpeg/</link><pubDate>Fri, 29 Nov 2024 13:22:15 +0700</pubDate><guid>http://previoip.github.io/posts/i-have-no-admin-privilege-and-i-have-to-ffmpeg/</guid><description>A bit of background. A while ago I had to make a powerpoint slides with sets of video and audio sequence for certain event backdrop.</description></item><item><title>Jupyter - One-Liner pip Install</title><link>http://previoip.github.io/posts/jupyter-pip-install-if-not-installed/</link><pubDate>Sun, 20 Oct 2024 16:22:20 +0700</pubDate><guid>http://previoip.github.io/posts/jupyter-pip-install-if-not-installed/</guid><description>When working with jupyter notebook, you might come across the need to install external packages in your environment with your preferred package manager such as pip.</description></item><item><title>(Bit)Torrent as File Transfer Protocol</title><link>http://previoip.github.io/posts/bittorrent-file-transfer/</link><pubDate>Fri, 27 Sep 2024 09:39:36 +0700</pubDate><guid>http://previoip.github.io/posts/bittorrent-file-transfer/</guid><description>Before I begin I might need to address that: I do not endorse the act and practice of piracy. This post is intended to be personal documentation on alternative use of BitTorrent and BitTorrent protocol as a way to transfer file over network.</description></item><item><title>Ubuntu - Add Custom Package Vendors</title><link>http://previoip.github.io/posts/ubuntu-add-custom-package-vendors/</link><pubDate>Mon, 16 Sep 2024 15:54:20 +0700</pubDate><guid>http://previoip.github.io/posts/ubuntu-add-custom-package-vendors/</guid><description>Sometimes software vendors provides their own repository for specific releases. For instance qbittorrent latest releases might not be available on apt database, thus we can use their ppa as an alternative for latest stable releases under ppa:qbittorrent-team/qbittorrent-stable.</description></item><item><title>Win11 Debloat</title><link>http://previoip.github.io/posts/win11-debloat/</link><pubDate>Sun, 15 Sep 2024 17:20:07 +0700</pubDate><guid>http://previoip.github.io/posts/win11-debloat/</guid><description>I&amp;rsquo;ve been using windows for my workstation for a long time, mainly due to lots of software just refuse to work under VMs or wine and me being well too adjusted with windows environment.</description></item><item><title>powershell - Merge CSVs</title><link>http://previoip.github.io/posts/powershell-merging-csv/</link><pubDate>Thu, 02 Feb 2023 19:45:37 +0700</pubDate><guid>http://previoip.github.io/posts/powershell-merging-csv/</guid><description>PrefaceCSV is a tabular data exchange format and is used dangerously extensively by data scientists, engineers, or analyst alike.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Home on dumb by default</title>
+    <link>http://localhost:1313/</link>
+    <description>Recent content in Home on dumb by default</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 11 Jun 2025 09:25:04 +0700</lastBuildDate>
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Conway&#39;s game of life</title>
+      <link>http://localhost:1313/applets/gol/</link>
+      <pubDate>Wed, 11 Jun 2025 09:25:04 +0700</pubDate>
+      <guid>http://localhost:1313/applets/gol/</guid>
+      <description>preset&#xD;1window.onload = function() 2{ 3 4const canvas = document.getElementById(&amp;#34;viewport&amp;#34;); 5const ctx = canvas.getContext(&amp;#34;2d&amp;#34;, {&amp;#34;alpha&amp;#34;: false}); 6const ftoi = (v)=&amp;gt;~~v; 7const iwrap = (a, b) =&amp;gt; a&amp;lt;0?</description>
+    </item>
+    <item>
+      <title>audio spectrogram</title>
+      <link>http://localhost:1313/applets/spectrogram/</link>
+      <pubDate>Fri, 23 May 2025 16:58:16 +0700</pubDate>
+      <guid>http://localhost:1313/applets/spectrogram/</guid>
+      <description>cmap&#xD;inferno&#xD;viridis&#xD;plasma&#xD;jet&#xD;hot&#xD;gnuplot&#xD;turbo&#xD;cubehelix&#xD;show second interval marker&#xD;double speed&#xD;yscale&#xD;min dB&#xD;max dB&#xD;1window.</description>
+    </item>
+    <item>
+      <title>canvas api test</title>
+      <link>http://localhost:1313/applets/canvas-test/</link>
+      <pubDate>Sat, 17 May 2025 09:39:36 +0700</pubDate>
+      <guid>http://localhost:1313/applets/canvas-test/</guid>
+      <description>loop&#xD;1{ 2 3const canvas = document.getElementById(&amp;#34;viewport&amp;#34;); 4const ctx = canvas.getContext(&amp;#34;2d&amp;#34;, {&amp;#34;alpha&amp;#34;:false}); 5const w = canvas.width; 6const h = canvas.</description>
+    </item>
+    <item>
+      <title>shazamio: shazam on your terminal</title>
+      <link>http://localhost:1313/posts/shazamnnn/</link>
+      <pubDate>Wed, 19 Feb 2025 15:02:25 +0700</pubDate>
+      <guid>http://localhost:1313/posts/shazamnnn/</guid>
+      <description>I&amp;rsquo;ve switched to soundcloud for a while now after knowing spotify&amp;rsquo;s questionable business practices.&#xA;Living with soundcloud made me realize one thing: most dj sets does not provide track list.</description>
+    </item>
+    <item>
+      <title>My Collection of Python Office Toolkit</title>
+      <link>http://localhost:1313/posts/python-office-toolkit/</link>
+      <pubDate>Tue, 04 Feb 2025 13:26:39 +0700</pubDate>
+      <guid>http://localhost:1313/posts/python-office-toolkit/</guid>
+      <description>There might be times when you&amp;rsquo;d need to perform tasks which requires softwares that are not within your company assets.</description>
+    </item>
+    <item>
+      <title>Python Hijinks - Permuting Params</title>
+      <link>http://localhost:1313/posts/permuting-configs/</link>
+      <pubDate>Wed, 01 Jan 2025 00:15:31 +0700</pubDate>
+      <guid>http://localhost:1313/posts/permuting-configs/</guid>
+      <description>Before we begin I must say this yet another &amp;ldquo;might not be best practices and not within standard of writing in python nor extendable to another language&amp;rdquo; ordeal.</description>
+    </item>
+    <item>
+      <title>ffmpeg - I Have No Admin Privilege and I Have To Transcode</title>
+      <link>http://localhost:1313/posts/i-have-no-admin-privilege-and-i-have-to-ffmpeg/</link>
+      <pubDate>Fri, 29 Nov 2024 13:22:15 +0700</pubDate>
+      <guid>http://localhost:1313/posts/i-have-no-admin-privilege-and-i-have-to-ffmpeg/</guid>
+      <description>A bit of background. A while ago I had to make a powerpoint slides with sets of video and audio sequence for certain event backdrop.</description>
+    </item>
+    <item>
+      <title>Jupyter - One-Liner pip Install</title>
+      <link>http://localhost:1313/posts/jupyter-pip-install-if-not-installed/</link>
+      <pubDate>Sun, 20 Oct 2024 16:22:20 +0700</pubDate>
+      <guid>http://localhost:1313/posts/jupyter-pip-install-if-not-installed/</guid>
+      <description>When working with jupyter notebook, you might come across the need to install external packages in your environment with your preferred package manager such as pip.</description>
+    </item>
+    <item>
+      <title>(Bit)Torrent as File Transfer Protocol</title>
+      <link>http://localhost:1313/posts/bittorrent-file-transfer/</link>
+      <pubDate>Fri, 27 Sep 2024 09:39:36 +0700</pubDate>
+      <guid>http://localhost:1313/posts/bittorrent-file-transfer/</guid>
+      <description>Before I begin I might need to address that: I do not endorse the act and practice of piracy. This post is intended to be personal documentation on alternative use of BitTorrent and BitTorrent protocol as a way to transfer file over network.</description>
+    </item>
+    <item>
+      <title>Terminalnotes</title>
+      <link>http://localhost:1313/posts/terminalnotes/</link>
+      <pubDate>Thu, 19 Sep 2024 13:36:46 +0700</pubDate>
+      <guid>http://localhost:1313/posts/terminalnotes/</guid>
+      <description>list open listen ports&#xD;required: net-tools acquire from apt&#xA;command: sudo netstat --ntlp | grep listen&#xA;sudo for flat -p to print out pid</description>
+    </item>
+    <item>
+      <title>Ubuntu - Add Custom Package Vendors</title>
+      <link>http://localhost:1313/posts/ubuntu-add-custom-package-vendors/</link>
+      <pubDate>Mon, 16 Sep 2024 15:54:20 +0700</pubDate>
+      <guid>http://localhost:1313/posts/ubuntu-add-custom-package-vendors/</guid>
+      <description>Sometimes software vendors provides their own repository for specific releases. For instance qbittorrent latest releases might not be available on apt database, thus we can use their ppa as an alternative for latest stable releases under ppa:qbittorrent-team/qbittorrent-stable.</description>
+    </item>
+    <item>
+      <title>Win11 Debloat</title>
+      <link>http://localhost:1313/posts/win11-debloat/</link>
+      <pubDate>Sun, 15 Sep 2024 17:20:07 +0700</pubDate>
+      <guid>http://localhost:1313/posts/win11-debloat/</guid>
+      <description>I&amp;rsquo;ve been using windows for my workstation for a long time, mainly due to lots of software just refuse to work under VMs or wine and me being well too adjusted with windows environment.</description>
+    </item>
+    <item>
+      <title>Theme Update 05 02 2023 - Theme Goes Public</title>
+      <link>http://localhost:1313/posts/theme-update-05-02-2023-theme-goes-public/</link>
+      <pubDate>Sun, 05 Feb 2023 15:10:22 +0700</pubDate>
+      <guid>http://localhost:1313/posts/theme-update-05-02-2023-theme-goes-public/</guid>
+      <description>Woah&#xD;Now you can use slug theme I made solely for this blog. Link to github repo. Although the more I think about how I structured this theme, the less I&amp;rsquo;m willing to put this into hugo marketplace.</description>
+    </item>
+    <item>
+      <title>powershell - Merge CSVs</title>
+      <link>http://localhost:1313/posts/powershell-merging-csv/</link>
+      <pubDate>Thu, 02 Feb 2023 19:45:37 +0700</pubDate>
+      <guid>http://localhost:1313/posts/powershell-merging-csv/</guid>
+      <description>Preface&#xD;CSV is a tabular data exchange format and is used dangerously extensively by data scientists, engineers, or analyst alike.</description>
+    </item>
+    <item>
+      <title>Python Hijinks: Outlook Safelink *Decoder*</title>
+      <link>http://localhost:1313/posts/python-hyjinks-outlook-safelink-decoder/</link>
+      <pubDate>Sat, 21 Jan 2023 23:12:30 +0700</pubDate>
+      <guid>http://localhost:1313/posts/python-hyjinks-outlook-safelink-decoder/</guid>
+      <description>Synopsis&#xD;There were times when me and my colleague were asked to regularly update and copy links out of Outlook 365 mail to be inserted into certain form.</description>
+    </item>
+    <item>
+      <title>VBA: Categorizing Bunch of Rows with Bitwise Operators</title>
+      <link>http://localhost:1313/posts/visual-bat-shit-user-defined-eq-operand/</link>
+      <pubDate>Thu, 19 Jan 2023 21:12:44 +0700</pubDate>
+      <guid>http://localhost:1313/posts/visual-bat-shit-user-defined-eq-operand/</guid>
+      <description>Synopsis&#xD;Keep in mind this might be a bad practice!&#xA;I had this problem where I needed to keep track of diffs from two different versions Excel workbooks.</description>
+    </item>
+    <item>
+      <title>Theme Update 17 01 2023 - Mermaid Diagram</title>
+      <link>http://localhost:1313/posts/theme-update-17-01-2023-mermaid/</link>
+      <pubDate>Tue, 17 Jan 2023 18:16:56 +0700</pubDate>
+      <guid>http://localhost:1313/posts/theme-update-17-01-2023-mermaid/</guid>
+      <description>Added to theme: mermaid diagram!&#xA;---&#xD;title: Animal example&#xD;---&#xD;classDiagram&#xD;note &#34;From Duck till Zebra&#34;&#xD;Animal &lt;|-- Duck&#xD;note for Duck &#34;</description>
+    </item>
+    <item>
+      <title>Theme Update 14-01-2023</title>
+      <link>http://localhost:1313/posts/theme-update-14-01-2023/</link>
+      <pubDate>Sat, 14 Jan 2023 22:44:13 +0700</pubDate>
+      <guid>http://localhost:1313/posts/theme-update-14-01-2023/</guid>
+      <description>edit 2023-01-15 13:18:21&#xD;Nevermind, none of these are used. I decided to go back to server-side rendering with Go-Chroma builtin syntax highlighting https://gohugo.</description>
+    </item>
+  </channel>
+</rss>
